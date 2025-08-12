@@ -1,0 +1,43 @@
+name: flutter_bantu_kyc_module
+description: "A KYC module for bantubeat eco system apps."
+version: 0.0.1
+# publish_to: 'none'
+
+environment:
+  sdk: ^3.8.1
+  flutter: ">=1.17.0"
+
+dependencies:
+  awesome_dio_interceptor: ^1.3.0
+  dio: ^5.8.0+1
+  dio_cache_interceptor: ^4.0.3
+  http_cache_hive_store: ^5.0.1
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.1
+  flutter_modular: ^6.4.1
+  flutter_screen_controller: ^0.0.5+1
+  flutter_svg: ^2.1.0
+  flutter_vector_icons: ^2.0.0
+  fluttertoast: ^8.2.12
+  google_fonts: ^6.2.1
+  hive: ^2.2.3
+  infinite_scroll_pagination: ^5.0.0
+  intl: 0.20.2
+  loader_overlay: 5.0.0
+  select_form_field: ^2.2.0
+  skeletonizer: ^2.0.1
+  url_launcher: ^6.3.1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.4.13
+  easy_localization: ^3.0.8 # Just to generate LocaleKeys
+
+
+flutter:
+  uses-material-design: true
