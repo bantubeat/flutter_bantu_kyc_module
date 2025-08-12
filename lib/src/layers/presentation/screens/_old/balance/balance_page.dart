@@ -7,21 +7,21 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import '../../../../core/network/my_http/my_http.dart';
-import '../../../../core/generated/locale_keys.g.dart';
-import '../../../../core/use_cases/use_case.dart';
+import '../../../../../core/network/my_http/my_http.dart';
+import '../../../../../core/generated/locale_keys.g.dart';
+import '../../../../../core/use_cases/use_case.dart';
 
-import '../../../domain/entities/user_entity.dart';
-import '../../../domain/entities/user_balance_entity.dart';
-import '../../../domain/use_cases/exchange_bzc_to_fiat_use_case.dart';
-import '../../../domain/use_cases/get_bzc_currency_converter_use_case.dart';
+import '../../../../domain/entities/user_entity.dart';
+import '../../../../domain/entities/user_balance_entity.dart';
+import '../../../../domain/use_cases/exchange_bzc_to_fiat_use_case.dart';
+import '../../../../domain/use_cases/get_bzc_currency_converter_use_case.dart';
 
-import '../../cubits/current_user_cubit.dart';
-import '../../cubits/user_balance_cubit.dart';
-import '../../helpers/ui_alert_helpers.dart';
-import '../../navigation/wallet_routes.dart';
-import '../../widgets/my_header_bar.dart';
-import '../../widgets/my_small_button.dart';
+import '../../../cubits/current_user_cubit.dart';
+import '../../../cubits/user_balance_cubit.dart';
+import '../../../helpers/ui_alert_helpers.dart';
+import '../../../navigation/wallet_routes.dart';
+import '../../../widgets/my_header_bar.dart';
+import '../../../widgets/my_small_button.dart';
 
 part 'widgets/financial_account_box.dart';
 part 'widgets/beatzcoin_account_box.dart';

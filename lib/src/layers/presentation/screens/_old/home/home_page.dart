@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/generated/locale_keys.g.dart';
+import '../../../../../core/generated/locale_keys.g.dart';
 
-import '../../navigation/wallet_routes.dart';
-import '../../wallet_module.dart';
+import '../../../navigation/wallet_routes.dart';
+import '../../../kyc_module.dart';
 import 'widgets/menu_item.dart';
 
 class HomePage extends StatelessWidget {
@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: WalletModule.getFloatingMenuWidget(),
+      floatingActionButton: KycModule.getFloatingMenuWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

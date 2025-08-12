@@ -2,7 +2,7 @@ import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/st
 import 'package:flutter/material.dart';
 import 'package:flutter_bantu_kyc_module/src/core/generated/locale_keys.g.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/domain/entities/financial_transaction_entity.dart';
-import 'package:flutter_bantu_kyc_module/src/layers/presentation/pages/transactions/widgets/transaction_item.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/presentation/screens/_old/transactions/widgets/transaction_item.dart';
 
 class TransactionFilter extends StatelessWidget {
   final EFinancialTxType? selectedType;

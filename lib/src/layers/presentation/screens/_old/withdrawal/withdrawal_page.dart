@@ -5,20 +5,20 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/generated/locale_keys.g.dart';
-import '../../../../core/network/api_constants.dart';
-import '../../../../core/use_cases/use_case.dart';
+import '../../../../../core/generated/locale_keys.g.dart';
+import '../../../../../core/network/api_constants.dart';
+import '../../../../../core/use_cases/use_case.dart';
 
-import '../../../domain/entities/user_entity.dart';
-import '../../../domain/use_cases/get_payment_preferences_use_case.dart';
-import '../../../domain/entities/user_balance_entity.dart';
+import '../../../../domain/entities/user_entity.dart';
+import '../../../../domain/use_cases/get_payment_preferences_use_case.dart';
+import '../../../../domain/entities/user_balance_entity.dart';
 
-import '../../../presentation/cubits/current_user_cubit.dart';
-import '../../../presentation/navigation/wallet_routes.dart';
+import '../../../cubits/current_user_cubit.dart';
+import '../../../navigation/wallet_routes.dart';
 
-import '../../cubits/user_balance_cubit.dart';
-import '../../widgets/action_button.dart';
-import '../../widgets/my_header_bar.dart';
+import '../../../cubits/user_balance_cubit.dart';
+import '../../../widgets/action_button.dart';
+import '../../../widgets/my_header_bar.dart';
 
 import 'widgets/registered_payment_method.dart';
 

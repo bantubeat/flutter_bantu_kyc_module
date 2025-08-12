@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../widgets/squared_bzc_svg_image.dart';
+import '../../../../widgets/squared_bzc_svg_image.dart';
 
 class BeatzcoinPackageCard extends StatelessWidget {
   final double amount;

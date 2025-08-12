@@ -30,7 +30,7 @@ void main() async {
   const isProduction = false;
   runApp(
     ModularApp(
-      module: WalletModule(
+      module: KycModule(
         getAccessToken: () => Future.sync(() => _accessToken),
         floatingMenuBuilder: MyBottomNavigationBar.new,
         routes: WalletRoutes(''.toLowerCase()),

@@ -6,13 +6,13 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/entities/user_balance_entity.dart';
-import '../../../presentation/cubits/user_balance_cubit.dart';
-import '../../../presentation/navigation/wallet_routes.dart';
+import '../../../../domain/entities/user_balance_entity.dart';
+import '../../../cubits/user_balance_cubit.dart';
+import '../../../navigation/wallet_routes.dart';
 
-import '../../../../core/generated/locale_keys.g.dart';
+import '../../../../../core/generated/locale_keys.g.dart';
 
-import '../../widgets/action_button.dart';
+import '../../../widgets/action_button.dart';
 
 class BeatzcoinsPage extends StatelessWidget {
   const BeatzcoinsPage({super.key});

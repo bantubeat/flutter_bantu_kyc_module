@@ -2,7 +2,7 @@ import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/st
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
-import '../../../../../core/generated/locale_keys.g.dart';
+import '../../../../../../core/generated/locale_keys.g.dart';
 
 class AccountSwitcher extends StatelessWidget {
   final bool isBzcAccount;

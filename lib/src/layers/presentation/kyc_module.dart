@@ -34,15 +34,15 @@ import '../../layers/domain/use_cases/request_deposit_payment_link_use_case.dart
 
 import '../../layers/presentation/cubits/current_user_cubit.dart';
 import '../../layers/presentation/cubits/user_balance_cubit.dart';
-import '../../layers/presentation/pages/buy_beatzcoins/buy_beatzcoins_page.dart';
-import '../../layers/presentation/pages/home/home_page.dart';
-import '../../layers/presentation/pages/transactions/transactions_page.dart';
-import '../../layers/presentation/pages/balance/balance_page.dart';
-import '../../layers/presentation/pages/withdrawal/withdrawal_page.dart';
-import '../../layers/presentation/pages/beatzcoins/beatzcoins_page.dart';
+import 'screens/_old/buy_beatzcoins/buy_beatzcoins_page.dart';
+import 'screens/_old/home/home_page.dart';
+import 'screens/_old/transactions/transactions_page.dart';
+import 'screens/_old/balance/balance_page.dart';
+import 'screens/_old/withdrawal/withdrawal_page.dart';
+import 'screens/_old/beatzcoins/beatzcoins_page.dart';
 import '../../layers/presentation/navigation/wallet_routes.dart';
 
-class WalletModule extends Module {
+class KycModule extends Module {
   static const floatingMenuBuilderKey = 'floatingMenuBuilder';
   static const isProductionKey = 'isProduction';
 
@@ -52,7 +52,7 @@ class WalletModule extends Module {
   final bool isProduction;
   final WalletApiKeys walletApiKeys;
 
-  WalletModule({
+  KycModule({
     required this.floatingMenuBuilder,
     required this.getAccessToken,
     required this.walletApiKeys,

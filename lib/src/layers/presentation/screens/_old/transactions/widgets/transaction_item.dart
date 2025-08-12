@@ -2,8 +2,8 @@ import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/st
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../domain/entities/financial_transaction_entity.dart';
-import '../../../../../core/generated/locale_keys.g.dart';
+import '../../../../../domain/entities/financial_transaction_entity.dart';
+import '../../../../../../core/generated/locale_keys.g.dart';
 import 'transaction_detail_bottom_sheet_modal.dart';
 
 class TransactionItem extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/string_translate_extension.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../core/generated/locale_keys.g.dart';
+import '../../../../../../core/generated/locale_keys.g.dart';
 
 class TransactionDetailBottomSheetModal extends StatelessWidget {
   final Map<String, String> transactionMap;

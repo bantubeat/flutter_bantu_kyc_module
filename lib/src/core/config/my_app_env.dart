@@ -7,5 +7,5 @@ final class MyAppEnv {
   MyAppEnv._();
 
   static bool get isProduction =>
-      Modular.tryGet<bool>(key: WalletModule.isProductionKey) ?? kReleaseMode;
+      Modular.tryGet<bool>(key: KycModule.isProductionKey) ?? kReleaseMode;
 }
