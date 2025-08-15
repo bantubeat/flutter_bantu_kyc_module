@@ -5,7 +5,6 @@ import 'package:flutter_bantu_kyc_module/flutter_bantu_kyc_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'widgets/my_bottom_navigation_bar.dart';
 
@@ -18,7 +17,7 @@ const _accessToken =
 //    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLXByb2QuYmFudHViZWF0LmNvbS9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTczNTYxOTk5MywiZXhwIjoxNzM4MDM5MTkzLCJuYmYiOjE3MzU2MTk5OTMsImp0aSI6IjhadjVRZXNQQVFFeWRqSlUiLCJzdWIiOiI3ZjkwYzg4MS0zY2QzLTQ0MGUtOTRmOS0zYmVjNDNmZTExZTEifQ.bI5S8GjTCEEkKco3q5aFAOpp35zyPFoEiet7zoB9Qds';
 
 void main() async {
-  await dotenv.load(fileName: '.env');
+  // await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
@@ -33,45 +32,28 @@ void main() async {
       module: KycModule(
         getAccessToken: () => Future.sync(() => _accessToken),
         floatingMenuBuilder: MyBottomNavigationBar.new,
-        routes: WalletRoutes(''.toLowerCase()),
-        walletApiKeys: const MyWalletApiKeys(isProduction: isProduction),
+        routes: KycRoutes(''.toLowerCase()),
+        kycApiKeys: const MyKycApiKeys(isProduction: isProduction),
         isProduction: isProduction,
       ),
-      child: AppWidget(),
+      child: const AppWidget(),
     ),
   );
 }
 
-final class MyWalletApiKeys extends WalletApiKeys {
-  const MyWalletApiKeys({required super.isProduction});
-
+final class MyKycApiKeys extends KycApiKeys {
+  const MyKycApiKeys({required super.isProduction});
+/*
   @override
   String getFlutterwavePublicKey() {
     return dotenv.get(
       isProduction ? 'LIVE_FLUTTERWAVE_PUB_KEY' : 'TEST_FLUTTERWAVE_PUB_KEY',
     );
-  }
-
-  @override
-  String getPaypalClientID() {
-    return dotenv.get(
-      isProduction ? 'LIVE_PAYPAL_CLIENT_ID' : 'TEST_PAYPAL_CLIENT_ID',
-    );
-  }
-
-  @override
-  String getStripePublishableKey() {
-    return dotenv.get(
-      isProduction
-          ? 'LIVE_STRIPE_PUBLISHABLE_KEY'
-          : 'TEST_STRIPE_PUBLISHABLE_KEY',
-    );
-  }
+  } */
 }
 
 class AppWidget extends StatelessWidget {
-  // ignore: prefer_const_constructors_in_immutables
-  AppWidget({super.key});
+  const AppWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -99,14 +81,14 @@ class AppWidget extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             ...context.localizationDelegates,
-            BantuWalletLocalization.getDelegate(
+            BantuKycLocalization.getDelegate(
               context.locale,
               context.supportedLocales,
             ),
           ],
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          builder: BantuWalletLocalization.init,
+          builder: BantuKycLocalization.init,
         ),
       ),
     );
