@@ -9,8 +9,9 @@ class CurrentUserCubit extends Cubit<AsyncSnapshot<UserEntity>> {
   final GetCurrentUserUseCase _getCurrentUserUseCase;
 
   CurrentUserCubit(this._getCurrentUserUseCase)
-      : super(const AsyncSnapshot.nothing()) {
-    fetchCurrentUser();
+    : super(const AsyncSnapshot.nothing()) {
+    // TODO: uncomment this below
+    // fetchCurrentUser();
   }
 
   void fetchCurrentUser() async {

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Widget;
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../core/config/wallet_api_keys.dart';
+import '../../core/config/kyc_api_keys.dart';
 import '../../core/network/api_constants.dart';
 import '../../core/network/my_http/my_http.dart';
 
@@ -34,13 +34,14 @@ import '../../layers/domain/use_cases/request_deposit_payment_link_use_case.dart
 
 import '../../layers/presentation/cubits/current_user_cubit.dart';
 import '../../layers/presentation/cubits/user_balance_cubit.dart';
-import 'screens/_old/buy_beatzcoins/buy_beatzcoins_page.dart';
-import 'screens/_old/home/home_page.dart';
-import 'screens/_old/transactions/transactions_page.dart';
-import 'screens/_old/balance/balance_page.dart';
-import 'screens/_old/withdrawal/withdrawal_page.dart';
-import 'screens/_old/beatzcoins/beatzcoins_page.dart';
-import '../../layers/presentation/navigation/wallet_routes.dart';
+import 'navigation/kyc_routes.dart';
+
+import 'screens/kyc_step1_personal_infos/kyc_step1_personal_infos_screen.dart';
+import 'screens/kyc_step2_address/kyc_step2_address_screen.dart';
+import 'screens/kyc_step3_id_card/kyc_step3_id_card_screen.dart';
+import 'screens/kyc_step4_payment_account/kyc_step4_payment_account_screen.dart';
+import 'screens/kyc_step5_and_step6/kyc_selfie_camera_screen.dart';
+import 'screens/kyc_step5_and_step6/kyc_selfie_intro_screen.dart';
 
 class KycModule extends Module {
   static const floatingMenuBuilderKey = 'floatingMenuBuilder';
@@ -48,15 +49,15 @@ class KycModule extends Module {
 
   final Widget Function() floatingMenuBuilder;
   final Future<String?> Function() getAccessToken;
-  final WalletRoutes _routes;
+  final KycRoutes _routes;
   final bool isProduction;
-  final WalletApiKeys walletApiKeys;
+  final KycApiKeys kycApiKeys;
 
   KycModule({
     required this.floatingMenuBuilder,
     required this.getAccessToken,
-    required this.walletApiKeys,
-    required WalletRoutes routes,
+    required this.kycApiKeys,
+    required KycRoutes routes,
     this.isProduction = kReleaseMode,
   }) : _routes = routes;
 
@@ -77,17 +78,17 @@ class KycModule extends Module {
   @override
   void binds(i) {
     const withCacheKey = 'with_cache_key';
-    i.addSingleton<bool>(() => isProduction, key: isProductionKey);
+    i.addLazySingleton<bool>(() => isProduction, key: isProductionKey);
     // Core
-    i.addSingleton<MyHttpClient>(_initMyHttpClient(withCache: false));
-    i.addSingleton<MyHttpClient>(
+    i.addLazySingleton<MyHttpClient>(_initMyHttpClient(withCache: false));
+    i.addLazySingleton<MyHttpClient>(
       _initMyHttpClient(withCache: true),
       key: withCacheKey,
     );
-    i.addInstance<WalletApiKeys>(walletApiKeys);
+    i.addInstance<KycApiKeys>(kycApiKeys);
 
     // Data layer dependencies
-    i.addSingleton(
+    i.addLazySingleton(
       () => BantubeatApiDataSource(
         client: Modular.get<MyHttpClient>(),
         cachedClient: Modular.get<MyHttpClient>(key: withCacheKey),
@@ -96,42 +97,64 @@ class KycModule extends Module {
 
     // Domain layer dependencies
     // -- Domain Reposities
-    i.addSingleton<BalanceRepository>(BalanceRepositoryImpl.new);
-    i.addSingleton<PublicRepository>(PublicRepositoryImpl.new);
-    i.addSingleton<ExchangeRepository>(ExchangeRepositoryImpl.new);
-    i.addSingleton<UserRepository>(UserRepositoryImpl.new);
-    i.addSingleton<PaymentRepository>(PaymentRepositoryImpl.new);
+    i.addLazySingleton<BalanceRepository>(BalanceRepositoryImpl.new);
+    i.addLazySingleton<PublicRepository>(PublicRepositoryImpl.new);
+    i.addLazySingleton<ExchangeRepository>(ExchangeRepositoryImpl.new);
+    i.addLazySingleton<UserRepository>(UserRepositoryImpl.new);
+    i.addLazySingleton<PaymentRepository>(PaymentRepositoryImpl.new);
 
     // -- Domain Use Cases
-    i.addSingleton(CheckWithdrawalEligibilityUseCase.new);
-    i.addSingleton(ConvertFiatCurrencyUseCase.new);
-    i.addSingleton(ExchangeBzcToFiatUseCase.new);
-    i.addSingleton(ExchangeFiatToBzcUseCase.new);
-    i.addSingleton(GetAllCurrenciesUseCase.new);
-    i.addSingleton(GetBzcCurrencyConverterUseCase.new);
-    i.addSingleton(GetCurrentUserUseCase.new);
-    i.addSingleton(GetExchangeBzcPacksUseCase.new);
-    i.addSingleton(GetPaymentPreferencesUseCase.new);
-    i.addSingleton(GetTransactionsUseCase.new);
-    i.addSingleton(GetUserBalanceUseCase.new);
-    i.addSingleton(MakeDepositDirectPaymentUseCase.new);
-    i.addSingleton(RequestDepositPaymentLinkUseCase.new);
+    i.addLazySingleton(CheckWithdrawalEligibilityUseCase.new);
+    i.addLazySingleton(ConvertFiatCurrencyUseCase.new);
+    i.addLazySingleton(ExchangeBzcToFiatUseCase.new);
+    i.addLazySingleton(ExchangeFiatToBzcUseCase.new);
+    i.addLazySingleton(GetAllCurrenciesUseCase.new);
+    i.addLazySingleton(GetBzcCurrencyConverterUseCase.new);
+    i.addLazySingleton(GetCurrentUserUseCase.new);
+    i.addLazySingleton(GetExchangeBzcPacksUseCase.new);
+    i.addLazySingleton(GetPaymentPreferencesUseCase.new);
+    i.addLazySingleton(GetTransactionsUseCase.new);
+    i.addLazySingleton(GetUserBalanceUseCase.new);
+    i.addLazySingleton(MakeDepositDirectPaymentUseCase.new);
+    i.addLazySingleton(RequestDepositPaymentLinkUseCase.new);
 
     // Presentation layer dependencies
     i.addSingleton(CurrentUserCubit.new);
     i.addSingleton(UserBalanceCubit.new);
     i.addSingleton(floatingMenuBuilder, key: floatingMenuBuilderKey);
-    i.addInstance<WalletRoutes>(_routes);
+    i.addInstance<KycRoutes>(_routes);
   }
 
   @override
   void routes(r) {
-    r.child(_routes.home.wp, child: (_) => const HomePage());
-    r.child(_routes.balance.wp, child: (_) => const BalancePage());
-    r.child(_routes.withdrawal.wp, child: (_) => const WithdrawalPage());
-    r.child(_routes.beatzcoins.wp, child: (_) => const BeatzcoinsPage());
-    r.child(_routes.buyBeatzcoins.wp, child: (_) => const BuyBeatzcoinsPage());
-    r.child(_routes.transactions.wp, child: (_) => const TransactionsPage());
-    r.wildcard(child: (_) => const HomePage());
+    r.redirect('/', to: _routes.home.wp);
+    r.redirect(_routes.home.wp, to: _routes.step1.wp);
+    r.child(
+      _routes.step1.wp,
+      child: (_) => const KycStep1PersonalInfosScreen(),
+    );
+    r.child(_routes.step2.wp, child: (_) => const KycStep2AddressScreen());
+    r.child(_routes.step3.wp, child: (_) => const KycStep3IdCardScreen());
+    r.child(
+      _routes.step4.wp,
+      child: (_) => const KycStep4PaymentAccountScreen(),
+    );
+    r.child(
+      _routes.step5a.wp,
+      child: (_) => const KycSelfieIntroPage(isStep5: true),
+    );
+    r.child(
+      _routes.step5b.wp,
+      child: (_) => const KycSelfieCameraPage(isStep5: true),
+    );
+    r.child(
+      _routes.step6a.wp,
+      child: (_) => const KycSelfieIntroPage(isStep5: false),
+    );
+    r.child(
+      _routes.step6b.wp,
+      child: (_) => const KycSelfieCameraPage(isStep5: false),
+    );
+    r.wildcard(child: (_) => const KycStep1PersonalInfosScreen());
   }
 }
