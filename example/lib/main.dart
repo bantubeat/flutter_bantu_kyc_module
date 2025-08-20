@@ -33,23 +33,12 @@ void main() async {
         getAccessToken: () => Future.sync(() => _accessToken),
         floatingMenuBuilder: MyBottomNavigationBar.new,
         routes: KycRoutes(''.toLowerCase()),
-        kycApiKeys: const MyKycApiKeys(isProduction: isProduction),
         isProduction: isProduction,
+        onFinish: (kycVerified) {},
       ),
       child: const AppWidget(),
     ),
   );
-}
-
-final class MyKycApiKeys extends KycApiKeys {
-  const MyKycApiKeys({required super.isProduction});
-/*
-  @override
-  String getFlutterwavePublicKey() {
-    return dotenv.get(
-      isProduction ? 'LIVE_FLUTTERWAVE_PUB_KEY' : 'TEST_FLUTTERWAVE_PUB_KEY',
-    );
-  } */
 }
 
 class AppWidget extends StatelessWidget {

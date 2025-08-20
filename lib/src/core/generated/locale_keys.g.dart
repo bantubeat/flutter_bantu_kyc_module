@@ -16,6 +16,8 @@ abstract class  LocaleKeys {
   static const kyc_module_common_start = 'kyc_module.common.start';
   static const kyc_module_common_upload = 'kyc_module.common.upload';
   static const kyc_module_common_try_again = 'kyc_module.common.try_again';
+  static const kyc_module_common_all_fields_required = 'kyc_module.common.all_fields_required';
+  static const kyc_module_common_field_required = 'kyc_module.common.field_required';
   static const kyc_module_image_service_choose_camera = 'kyc_module.image_service.choose_camera';
   static const kyc_module_image_service_choose_gallery = 'kyc_module.image_service.choose_gallery';
   static const kyc_module_stepper_step1 = 'kyc_module.stepper.step1';
@@ -66,6 +68,7 @@ abstract class  LocaleKeys {
   static const kyc_module_step4_bank_account = 'kyc_module.step4.bank_account';
   static const kyc_module_step4_bank_account_way = 'kyc_module.step4.bank_account_way';
   static const kyc_module_step4_add_payment_acconut = 'kyc_module.step4.add_payment_acconut';
+  static const kyc_module_step4_bad_account_number_confirmation = 'kyc_module.step4.bad_account_number_confirmation';
   static const kyc_module_step5_title = 'kyc_module.step5.title';
   static const kyc_module_step5_description = 'kyc_module.step5.description';
   static const kyc_module_step6_title = 'kyc_module.step6.title';

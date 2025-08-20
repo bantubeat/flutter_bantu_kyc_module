@@ -1,18 +1,9 @@
-import 'package:country_code_picker/country_code_picker.dart' show CountryCode;
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart'
-    show ImageProvider, PageController, Curves;
-import 'package:flutter_bantu_kyc_module/flutter_bantu_kyc_module.dart';
-import 'package:flutter_bantu_kyc_module/src/layers/presentation/helpers/image_picker_helper.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_screen_controller/flutter_screen_controller.dart';
-import 'package:image_picker/image_picker.dart';
-
-enum EVerificationMethod { passport, nationalCni, drivingLicense }
+part of 'kyc_step3_id_card_screen.dart';
 
 /// Manages the state and logic for the entire KYC identity flow.
-class KycStep3IdController extends ScreenController {
-  late PageController pageCtrl;
+class _KycStep3IdController extends ScreenController {
+  final KycFormDataStep2 step2Data;
+  final pageCtrl = PageController();
   // State for the first screen
   var selectedVerificationMethod = EVerificationMethod.nationalCni;
   CountryCode? selectedCountry;
@@ -27,15 +18,9 @@ class KycStep3IdController extends ScreenController {
   ImageProvider? versoIdImage;
   bool versoConsentChecked = false;
 
-  KycStep3IdController(super.state);
+  _KycStep3IdController(super.state, this.step2Data);
 
   // --- Resource handling ---
-
-  @override
-  @protected
-  void onInit() {
-    pageCtrl = PageController();
-  }
 
   @override
   @protected
@@ -107,6 +92,23 @@ class KycStep3IdController extends ScreenController {
   }
 
   void _onValidate() async {
-    Modular.get<KycRoutes>().step4.push();
+    final country = selectedCountry;
+    final rectoIdImageXFile = _rectoIdImageXFile;
+    final versoIdImageXFile = _versoIdImageXFile;
+    if (country != null &&
+        rectoIdImageXFile != null &&
+        versoIdImageXFile != null) {
+      final kycFormData = KycFormDataStep3(
+        step2Data: step2Data,
+        idCountry: country,
+        verificationMethod: selectedVerificationMethod,
+        rectoIdImage: rectoIdImageXFile,
+        versoIdImage: versoIdImageXFile,
+      );
+
+      Modular.get<KycRoutes>().step4.push(kycFormData);
+    } else {
+      UiAlertHelpers.showErrorSnackBar(context, 'Tous les champs sont requis');
+    }
   }
 }

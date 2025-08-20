@@ -1,15 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bantu_kyc_module/src/core/generated/locale_keys.g.dart';
-import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/string_translate_extension.dart';
+part of '../kyc_step3_id_card_screen.dart';
 
-class KycIdConsentCheckbox extends StatelessWidget {
+class _KycIdConsentCheckbox extends StatelessWidget {
   final bool isChecked;
   final ValueChanged<bool?> onChanged;
 
-  const KycIdConsentCheckbox({
+  const _KycIdConsentCheckbox({
     required this.isChecked,
     required this.onChanged,
-    super.key,
   });
 
   @override

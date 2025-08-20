@@ -4,8 +4,14 @@ import 'kyc_form_label.dart';
 
 class KycFormTextField extends StatelessWidget {
   final String label;
+  final bool readOnly;
+  final TextEditingController controller;
 
-  const KycFormTextField({required this.label});
+  const KycFormTextField({
+    required this.label,
+    required this.controller,
+    this.readOnly = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +22,8 @@ class KycFormTextField extends StatelessWidget {
         KycFormLabel(label),
         const SizedBox(height: 8),
         TextField(
+          readOnly: readOnly,
+          controller: controller,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,

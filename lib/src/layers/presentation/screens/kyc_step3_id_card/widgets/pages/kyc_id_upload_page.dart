@@ -1,23 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bantu_kyc_module/src/core/generated/locale_keys.g.dart';
-import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/string_translate_extension.dart';
-import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_header.dart';
-import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_primary_button.dart';
-import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_upload_box.dart';
-
-import '../../kyc_step3_id_controller.dart';
-import '../kyc_id_consent_checkbox.dart';
+part of '../../kyc_step3_id_card_screen.dart';
 
 // 2. ID Upload Screen (for both Recto and Verso)
-class KycIdUploadPage extends StatelessWidget {
+class _KycIdUploadPage extends StatelessWidget {
   final bool isRecto;
-  final KycStep3IdController controller;
+  final _KycStep3IdController controller;
 
-  const KycIdUploadPage({
-    required this.isRecto,
-    required this.controller,
-    super.key,
-  });
+  const _KycIdUploadPage({required this.isRecto, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +29,7 @@ class KycIdUploadPage extends StatelessWidget {
           onTap: () => controller.pickIdImage(isRecto),
         ),
         const SizedBox(height: 24),
-        KycIdConsentCheckbox(
+        _KycIdConsentCheckbox(
           isChecked: consentChecked,
           onChanged: (value) =>
               controller.toggleConsent(isRecto: isRecto, value: value),

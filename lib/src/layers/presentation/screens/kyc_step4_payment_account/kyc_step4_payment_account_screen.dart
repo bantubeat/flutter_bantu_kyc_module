@@ -13,11 +13,13 @@ import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_for
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_stepper.dart';
 import 'package:flutter_screen_controller/flutter_screen_controller.dart';
 
+import '../../ui_models/kyc_form_data.dart';
 import 'widgets/account_type_selector.dart';
 
 /// 4. Payment Account Screen
 class KycStep4PaymentAccountScreen extends StatelessWidget {
-  const KycStep4PaymentAccountScreen({super.key});
+  final KycFormDataStep3 step3Data;
+  const KycStep4PaymentAccountScreen({required this.step3Data});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class KycStep4PaymentAccountScreen extends StatelessWidget {
             const SizedBox(height: 32),
             KycFormCard(
               child: ScreenControllerBuilder(
-                create: KycStep4PaymentAccountController.new,
+                create: (s) => KycStep4PaymentAccountController(s, step3Data),
                 builder: (context, controller) {
                   final isMobile =
                       controller.selectedAccountType == EAccountType.mobile;
@@ -59,35 +61,42 @@ class KycStep4PaymentAccountScreen extends StatelessWidget {
                           label: LocaleKeys
                               .kyc_module_step4_mobile_operator_name
                               .tr(),
+                          controller: controller.mobileOperatorCtrl,
                         ),
                         const SizedBox(height: 16),
                         KycFormTextField(
                           label: LocaleKeys.kyc_module_step4_account_number
                               .tr(),
+                          controller: controller.mobileAccountNumberCtrl,
                         ),
                       ] else ...[
                         KycFormTextField(
                           label: LocaleKeys.kyc_module_step4_account_number
                               .tr(),
+                          controller: controller.bankAccountNumberCtrl,
                         ),
                         const SizedBox(height: 16),
                         KycFormTextField(
                           label: LocaleKeys
                               .kyc_module_step4_confirm_account_number
                               .tr(),
+                          controller: controller.bankAccountNumberConfirmCtrl,
                         ),
                         const SizedBox(height: 16),
                         KycFormTextField(
                           label: LocaleKeys.kyc_module_step4_bank_name.tr(),
+                          controller: controller.bankNameCtrl,
                         ),
                         const SizedBox(height: 16),
                         KycFormTextField(
                           label: LocaleKeys.kyc_module_step4_swift_code.tr(),
+                          controller: controller.bankSwiftCodeCtrl,
                         ),
                       ],
                       const SizedBox(height: 16),
                       KycFormTextField(
                         label: LocaleKeys.kyc_module_step4_account_holder.tr(),
+                        controller: controller.accountHolderNameCtrl,
                       ),
                       const SizedBox(height: 24),
                       KycFormUploadBox(
@@ -96,7 +105,7 @@ class KycStep4PaymentAccountScreen extends StatelessWidget {
                         label: LocaleKeys.kyc_module_step4_load_bank_docs.tr(),
                       ),
                       const SizedBox(height: 32),
-                      KycFormPrimaryButton(onPressed: controller.onValidate),
+                      KycFormPrimaryButton(onPressed: controller.onNext),
                     ],
                   );
                 },

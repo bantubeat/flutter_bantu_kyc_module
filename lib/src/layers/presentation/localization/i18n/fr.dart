@@ -15,7 +15,9 @@ const Map<String, dynamic> langMap = {
       "next": "Suivant",
       "start": "Démarrer",
       "upload": "Téléverser",
-      "try_again": "Re-essayez"
+      "try_again": "Re-essayez",
+			"all_fields_required": "Tous les champs sont obligatoire",
+			"field_required": "Le champ {{field}} est obligatoire"
     },
     "image_service": {
 			"choose_camera": "Camera",
@@ -83,7 +85,8 @@ const Map<String, dynamic> langMap = {
 			"mobile_payment_way": "Instantanément",
 			"bank_account": "Compte Bancaire",
 			"bank_account_way": "Virement bancaire",
-			"add_payment_acconut": "Ajouter un Compte de paiement"
+			"add_payment_acconut": "Ajouter un Compte de paiement",
+			"bad_account_number_confirmation": "La confirmation du numéro de compte est incorrect"
     },
     "step5": {
       "title": "Selfie",

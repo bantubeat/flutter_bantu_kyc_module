@@ -3,6 +3,8 @@ import 'package:flutter_bantu_kyc_module/src/core/generated/locale_keys.g.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/string_translate_extension.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/screens/kyc_step4_payment_account/kyc_step4_payment_account_controller.dart';
 
+import '../../../ui_models/kyc_form_data.dart';
+
 class AccountTypeSelector extends StatelessWidget {
   final KycStep4PaymentAccountController controller;
 

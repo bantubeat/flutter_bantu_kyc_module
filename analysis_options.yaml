@@ -36,7 +36,7 @@ linter:
     - avoid_escaping_inner_quotes
     - use_key_in_widget_constructors: false
     - prefer_expression_function_bodies: false
-    - always_put_required_named_parameters_first
+    - always_put_required_named_parameters_first: false
     - always_declare_return_types
     # - avoid_redundant_argument_values: false
     - avoid_relative_lib_imports
