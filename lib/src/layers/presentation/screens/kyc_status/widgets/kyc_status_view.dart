@@ -43,7 +43,7 @@ class _KycStatusView extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  '“ Motif du refus ”\n\n$message',
+                  message,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -63,7 +63,7 @@ class _KycStatusView extends StatelessWidget {
                 ),
               ),
             const Spacer(),
-            KycFormPrimaryButton(onPressed: onButtonPressed),
+            KycFormPrimaryButton(label: buttonText, onPressed: onButtonPressed),
           ],
         ),
       ),

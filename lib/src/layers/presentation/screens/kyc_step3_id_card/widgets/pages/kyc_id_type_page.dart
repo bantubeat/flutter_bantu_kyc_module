@@ -1,15 +1,27 @@
 part of '../../kyc_step3_id_card_screen.dart';
 
 class _KycIdTypePage extends StatelessWidget {
-  final _KycStep3IdController controller;
+  final EVerificationMethod selectedVerificationMethod;
+  final void Function(EVerificationMethod?) onSelectVerificationMethod;
 
-  const _KycIdTypePage({required this.controller});
+  final CountryCode? selectedCountry;
+  final void Function(CountryCode) onSelectCountry;
+
+  final VoidCallback onNext;
+
+  const _KycIdTypePage({
+    required this.selectedVerificationMethod,
+    required this.onSelectVerificationMethod,
+    required this.selectedCountry,
+    required this.onSelectCountry,
+    required this.onNext,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return RadioGroup(
-      groupValue: controller.selectedVerificationMethod,
-      onChanged: controller.selectVerificationMethod,
+    return RadioGroup<EVerificationMethod>(
+      groupValue: selectedVerificationMethod,
+      onChanged: onSelectVerificationMethod,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -20,8 +32,8 @@ class _KycIdTypePage extends StatelessWidget {
           const SizedBox(height: 24),
           KycFormCountrySelectField(
             label: LocaleKeys.kyc_module_step3_nationality.tr(),
-            initialSelection: controller.selectedCountry?.code ?? 'CM',
-            onChanged: controller.selectCountry,
+            initialSelection: selectedCountry?.code,
+            onChanged: onSelectCountry,
           ),
           const SizedBox(height: 24),
           KycFormLabel(LocaleKeys.kyc_module_step3_verification_method.tr()),
@@ -38,7 +50,7 @@ class _KycIdTypePage extends StatelessWidget {
             value: EVerificationMethod.drivingLicense,
           ),
           const Spacer(),
-          KycFormPrimaryButton(onPressed: controller.onNext),
+          KycFormPrimaryButton(onPressed: onNext),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:country_code_picker/country_code_picker.dart' show CountryCode;
+import 'package:flutter/foundation.dart' show protected;
 import 'package:flutter/material.dart'
     show ImageProvider, TextEditingController;
 import 'package:flutter_bantu_kyc_module/flutter_bantu_kyc_module.dart';
@@ -35,7 +36,20 @@ class KycStep4PaymentAccountController extends ScreenController {
   XFile? _bankDocumentXFile;
   ImageProvider? bankDocument;
 
-  KycStep4PaymentAccountController(super.state, this.step3Data);
+  KycStep4PaymentAccountController(super.state, this.step3Data)
+    : selectedPaymentCountry = step3Data.idCountry;
+
+  @protected
+  @override
+  void onDispose() {
+    mobileOperatorCtrl.dispose();
+    mobileAccountNumberCtrl.dispose();
+    bankNameCtrl.dispose();
+    bankAccountNumberCtrl.dispose();
+    bankAccountNumberConfirmCtrl.dispose();
+    bankSwiftCodeCtrl.dispose();
+    accountHolderNameCtrl.dispose();
+  }
 
   void selectPaymentCountry(CountryCode countryCode) {
     selectedPaymentCountry = countryCode;

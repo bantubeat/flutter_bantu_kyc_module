@@ -6,18 +6,18 @@ class KycEntity extends Equatable {
   final String uuid;
   final EKycStatus status;
   final String firstName;
-  final String lastName;
+  final String? lastName;
   final String address;
   final String city;
   final String country;
-  final String zipCode;
-  final String frontFaceImageUrl;
+  final String? zipCode;
+  final String? frontFaceImageUrl;
   final String? backFaceImageUrl;
-  final String selfieWithIdCardImageUrl;
-  final String normalSelfieImageUrl;
+  final String? selfieWithIdCardImageUrl;
+  final String? normalSelfieImageUrl;
   final String? adminMessage;
-  final String linkRs;
-  final String email;
+  final String? linkRs;
+  final String? email;
 
   const KycEntity({
     required this.uuid,

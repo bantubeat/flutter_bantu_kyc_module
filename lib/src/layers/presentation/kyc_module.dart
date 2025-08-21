@@ -103,10 +103,16 @@ class KycModule extends Module {
     i.addLazySingleton(CancelKycUseCase.new);
 
     // Presentation layer dependencies
-    i.addSingleton(CurrentUserCubit.new);
-    i.addSingleton(KycCubit.new);
+    i.addSingleton<CurrentUserCubit>(
+      CurrentUserCubit.new,
+      config: BindConfig(onDispose: (c) => c.close()),
+    );
+    i.addSingleton<KycCubit>(
+      KycCubit.new,
+      config: BindConfig(onDispose: (c) => c.close()),
+    );
     i.addSingleton(floatingMenuBuilder, key: _floatingMenuBuilderKey);
-    i.addSingleton<OnKycFinishFn>(onFinish, key: _onFinishKey);
+    i.addSingleton<OnKycFinishFn>(() => onFinish, key: _onFinishKey);
     i.addInstance<KycRoutes>(_routes);
   }
 

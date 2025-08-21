@@ -48,12 +48,15 @@ class KycStep4PaymentAccountScreen extends StatelessWidget {
                       KycFormLabel(
                         LocaleKeys.kyc_module_step4_account_type.tr(),
                       ),
-                      AccountTypeSelector(controller),
+                      AccountTypeSelector(
+                        selectedAccountType: controller.selectedAccountType,
+                        onSelectAccountType: controller.setAccountType,
+                      ),
                       const SizedBox(height: 16),
                       if (isMobile) ...[
                         KycFormCountrySelectField(
                           initialSelection:
-                              controller.selectedPaymentCountry?.code ?? 'CM',
+                              controller.selectedPaymentCountry?.code,
                           onChanged: controller.selectPaymentCountry,
                         ),
                         const SizedBox(height: 16),

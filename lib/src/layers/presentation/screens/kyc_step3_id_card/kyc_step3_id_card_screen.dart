@@ -50,11 +50,48 @@ class KycStep3IdCardScreen extends StatelessWidget {
                       controller: controller.pageCtrl,
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
-                        _KycIdTypePage(controller: controller),
-                        _KycIdUploadPage(isRecto: true, controller: controller),
+                        _KycIdTypePage(
+                          selectedVerificationMethod:
+                              controller.selectedVerificationMethod,
+                          onSelectVerificationMethod:
+                              controller.selectVerificationMethod,
+                          selectedCountry: controller.selectedCountry,
+                          onSelectCountry: controller.selectCountry,
+                          onNext: controller.onNext,
+                        ),
                         _KycIdUploadPage(
-                          isRecto: false,
-                          controller: controller,
+                          title: LocaleKeys
+                              .kyc_module_step3_pick_recto_page_title
+                              .tr(),
+                          subtitle: LocaleKeys
+                              .kyc_module_step3_pick_recto_page_description
+                              .tr(),
+                          isConsentChecked: controller.rectoConsentChecked,
+                          onToggleConsent: (value) => controller.toggleConsent(
+                            isRecto: true,
+                            value: value,
+                          ),
+                          onPickIdImage: () =>
+                              controller.pickIdImage(isRecto: true),
+                          pickedImage: controller.rectoIdImage,
+                          onNext: controller.onNext,
+                        ),
+                        _KycIdUploadPage(
+                          title: LocaleKeys
+                              .kyc_module_step3_pick_verso_page_title
+                              .tr(),
+                          subtitle: LocaleKeys
+                              .kyc_module_step3_pick_verso_page_description
+                              .tr(),
+                          isConsentChecked: controller.versoConsentChecked,
+                          onToggleConsent: (value) => controller.toggleConsent(
+                            isRecto: false,
+                            value: value,
+                          ),
+                          onPickIdImage: () =>
+                              controller.pickIdImage(isRecto: false),
+                          pickedImage: controller.versoIdImage,
+                          onNext: controller.onNext,
                         ),
                       ],
                     );

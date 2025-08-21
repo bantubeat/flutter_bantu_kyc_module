@@ -7,7 +7,7 @@ class Step1Controller extends ScreenController {
   final surnameCtrl = TextEditingController();
   final nameCtrl = TextEditingController();
   EGender? selectedGender;
-  DateTime? pickedBirthdate;
+  DateTime? _pickedBirthdate;
 
   @protected
   @override
@@ -16,23 +16,30 @@ class Step1Controller extends ScreenController {
     nameCtrl.dispose();
   }
 
+  String get pickedBirthdate {
+    final dt = _pickedBirthdate;
+    if (dt == null) return '';
+    return '${dt.year}-${dt.month}-${dt.day}';
+  }
+
   void selectGender(EGender? newGender) {
     selectedGender = newGender;
     refreshUI();
   }
 
   void pickBirthdate() async {
-    pickedBirthdate = await showDatePicker(
+    _pickedBirthdate = await showDatePicker(
       context: context,
       initialDatePickerMode: DatePickerMode.year,
       initialDate: DateTime.now().subtract(const Duration(days: 365 * 30)),
       firstDate: DateTime.now().subtract(const Duration(days: 365 * 100)),
       lastDate: DateTime.now().subtract(const Duration(days: 365 * 18)),
     );
+    refreshUI();
   }
 
   void onNext() {
-    final birthdate = pickedBirthdate;
+    final birthdate = _pickedBirthdate;
     final gender = selectedGender;
     final firstName = surnameCtrl.text;
     final lastName = nameCtrl.text;
@@ -49,7 +56,10 @@ class Step1Controller extends ScreenController {
       );
       Modular.get<KycRoutes>().step2.push(kycFormData);
     } else {
-      UiAlertHelpers.showErrorSnackBar(context, 'Tous les champs sont requis');
+      UiAlertHelpers.showErrorSnackBar(
+        context,
+        LocaleKeys.kyc_module_common_all_fields_required.tr(),
+      );
     }
   }
 }

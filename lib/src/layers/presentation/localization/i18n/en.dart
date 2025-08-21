@@ -2,6 +2,7 @@
 
 const Map<String, dynamic> langMap = {
   "kyc_module": {
+    "appBarTitle": "KYC",
 		"common": {
       "initializing": "Initializing...",
       "an_error_occur": "An error occurred: {{message}}",
@@ -22,6 +23,23 @@ const Map<String, dynamic> langMap = {
 			"choose_camera": "Camera",
 			"choose_gallery": "Gallery"
     },
+		"status_screen": {
+			"title": "KYC Verification Status",
+			"success_title": "Success",
+			"success_message": "You can now use the app and submit your payment requests.",
+			"success_button_text": "Back to Home",
+			"failed_title": "Failure",
+			"failed_message": "We found inconsistencies in the provided information: {{message}}",
+			"failed_button_text": "Submit a new request",
+			"pending_title": "Pending",
+			"pending_message": "Your documents are being verified. You can cancel this request if you wish.",
+			"pending_button_text": "Cancel Request",
+			"unknown_title": "Unknown Status",
+			"unknown_message": "An error occurred. Please contact support.",
+			"unknown_button_text": "Back",
+			"kyc_not_submitted": "No KYC request submitted.",
+			"start_kyc_verification" : "Start KYC Verification"
+		},
     "stepper": {
       "step1": "Personal Data",
       "step2": "Residency",
@@ -62,9 +80,14 @@ const Map<String, dynamic> langMap = {
       "passport": "Passport",
       "driving_license": "Driving license",
       "load_image": "Upload your document",
+			"consent_not_checked": "You must accept the consent",
       "warning":
-          "I hereby accept that the above document belongs to me and voluntarily give my consent to Bantubeat to use it as proof of address for KYC for this purpose only"
-    },
+          "I hereby accept that the above document belongs to me and voluntarily give my consent to Bantubeat to use it as proof of address for KYC for this purpose only",
+			"pick_recto_page_title": "ID Document (Front)",
+      "pick_verso_page_description": "Upload a readable image of the back of your ID document",
+			"pick_verso_page_title": "ID Document (Back)",
+			"pick_recto_page_description": "Upload a readable image of the front of your ID document"
+		},
     "step4": {
       "title": "Payment Account",
       "description":

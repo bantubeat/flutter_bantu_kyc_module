@@ -18,7 +18,10 @@ class _KycStep3IdController extends ScreenController {
   ImageProvider? versoIdImage;
   bool versoConsentChecked = false;
 
-  _KycStep3IdController(super.state, this.step2Data);
+  _KycStep3IdController(super.state, this.step2Data) : super() {
+    // Initialize the selected country from step 2 data
+    selectedCountry = step2Data.country;
+  }
 
   // --- Resource handling ---
 
@@ -44,7 +47,7 @@ class _KycStep3IdController extends ScreenController {
     refreshUI();
   }
 
-  void pickIdImage(bool isRecto) {
+  void pickIdImage({required bool isRecto}) {
     if (isRecto) {
       _pickImage((image) async {
         _rectoIdImageXFile = image;
@@ -83,12 +86,30 @@ class _KycStep3IdController extends ScreenController {
   void onNext() {
     final currentPage = pageCtrl.page;
     if (currentPage == null) return;
-    if (currentPage == 2) return _onValidate(); // it's last page
+    if (currentPage == 1 && !rectoConsentChecked) {
+      UiAlertHelpers.showErrorSnackBar(
+        context,
+        LocaleKeys.kyc_module_step3_consent_not_checked.tr(),
+      );
+      return;
+    }
 
-    pageCtrl.nextPage(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+    if (currentPage == 2 && !versoConsentChecked) {
+      UiAlertHelpers.showErrorSnackBar(
+        context,
+        LocaleKeys.kyc_module_step3_consent_not_checked.tr(),
+      );
+      return;
+    }
+
+    if (currentPage < 2) {
+      pageCtrl.nextPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeIn,
+      );
+    } else {
+      _onValidate(); // it's last page
+    }
   }
 
   void _onValidate() async {
@@ -108,7 +129,10 @@ class _KycStep3IdController extends ScreenController {
 
       Modular.get<KycRoutes>().step4.push(kycFormData);
     } else {
-      UiAlertHelpers.showErrorSnackBar(context, 'Tous les champs sont requis');
+      UiAlertHelpers.showErrorSnackBar(
+        context,
+        LocaleKeys.kyc_module_common_all_fields_required.tr(),
+      );
     }
   }
 }

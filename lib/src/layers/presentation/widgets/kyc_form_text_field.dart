@@ -6,11 +6,13 @@ class KycFormTextField extends StatelessWidget {
   final String label;
   final bool readOnly;
   final TextEditingController controller;
+  final VoidCallback? onTap;
 
   const KycFormTextField({
     required this.label,
     required this.controller,
     this.readOnly = false,
+    this.onTap,
   });
 
   @override
@@ -24,6 +26,7 @@ class KycFormTextField extends StatelessWidget {
         TextField(
           readOnly: readOnly,
           controller: controller,
+          onTap: onTap,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,

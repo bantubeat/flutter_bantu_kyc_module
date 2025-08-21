@@ -63,14 +63,12 @@ class KycStep1PersonalInfosScreen extends StatelessWidget {
                         controller: ctrl.nameCtrl,
                       ),
                       const SizedBox(height: 16),
-                      GestureDetector(
+                      KycFormTextField(
+                        label: LocaleKeys.kyc_module_step1_birthdate.tr(),
+                        readOnly: true,
                         onTap: ctrl.pickBirthdate,
-                        child: KycFormTextField(
-                          label: LocaleKeys.kyc_module_step1_birthdate.tr(),
-                          readOnly: true,
-                          controller: TextEditingController(
-                            text: ctrl.pickedBirthdate?.toLocal().toString(),
-                          ),
+                        controller: TextEditingController(
+                          text: ctrl.pickedBirthdate,
                         ),
                       ),
                       const SizedBox(height: 24),

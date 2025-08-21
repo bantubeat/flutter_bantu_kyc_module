@@ -5,12 +5,23 @@ class Step2Controller extends ScreenController {
   final streetCtrl = TextEditingController();
   final cityCtrl = TextEditingController();
   final postalCodeCtrl = TextEditingController();
-  CountryCode? _selectedCountry;
+  CountryCode? selectedCountry;
 
-  Step2Controller(super.state, {required this.previousData});
+  Step2Controller(super.state, {required this.previousData})
+    : selectedCountry = CountryCode.tryFromCountryCode(
+        previousData.currentUser.pays,
+      );
+
+  @protected
+  @override
+  void onDispose() {
+    streetCtrl.dispose();
+    cityCtrl.dispose();
+    postalCodeCtrl.dispose();
+  }
 
   void selectCountry(CountryCode country) {
-    _selectedCountry = country;
+    selectedCountry = country;
     refreshUI();
   }
 
@@ -18,7 +29,7 @@ class Step2Controller extends ScreenController {
     final street = streetCtrl.text;
     final city = cityCtrl.text;
     final postalCode = postalCodeCtrl.text;
-    final country = _selectedCountry;
+    final country = selectedCountry;
     if (country != null &&
         street.isNotEmpty &&
         city.isNotEmpty &&
@@ -32,7 +43,10 @@ class Step2Controller extends ScreenController {
       );
       Modular.get<KycRoutes>().step3.push(kycFormData);
     } else {
-      UiAlertHelpers.showErrorSnackBar(context, 'Tous les champs sont requis');
+      UiAlertHelpers.showErrorSnackBar(
+        context,
+        LocaleKeys.kyc_module_common_all_fields_required.tr(),
+      );
     }
   }
 }

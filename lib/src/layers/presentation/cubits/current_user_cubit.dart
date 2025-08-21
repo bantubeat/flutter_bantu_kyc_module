@@ -12,7 +12,12 @@ class CurrentUserCubit extends Cubit<AsyncSnapshot<UserEntity>> {
     fetchCurrentUser();
   }
 
-  void fetchCurrentUser() async {
+  void fetchCurrentUser({bool forceRefresh = true}) async {
+    if (!forceRefresh && state.hasData) return; // Already fetching or has data
+
+    // Exit if Already fetching
+    if (state.connectionState == ConnectionState.waiting) return;
+
     emit(state.inState(ConnectionState.waiting));
 
     try {

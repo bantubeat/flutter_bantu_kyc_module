@@ -64,7 +64,7 @@ class KycStep2AddressScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     KycFormCountrySelectField(
-                      initialSelection: previousData.currentUser.pays,
+                      initialSelection: ctrl.selectedCountry?.code,
                       onChanged: ctrl.selectCountry,
                     ),
                     const SizedBox(height: 32),
