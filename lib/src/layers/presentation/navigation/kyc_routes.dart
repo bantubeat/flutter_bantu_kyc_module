@@ -15,7 +15,7 @@ final class KycRoutes {
   final String _step6b;
   final String _complete;
 
-  KycRoutes(
+  const KycRoutes(
     this.prefix_, {
     String home = 'home',
     String step1 = 'step1',
