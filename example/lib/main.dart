@@ -34,7 +34,9 @@ void main() async {
         floatingMenuBuilder: MyBottomNavigationBar.new,
         routes: KycRoutes(''.toLowerCase()),
         isProduction: isProduction,
-        onFinish: (kycVerified) {},
+        onFinish: (kycVerified) {
+          Modular.get<KycRoutes>().step1.navigate();
+        },
       ),
       child: const AppWidget(),
     ),

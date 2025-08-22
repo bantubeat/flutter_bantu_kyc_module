@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bantu_kyc_module/flutter_bantu_kyc_module.dart';
 import 'package:flutter_bantu_kyc_module/src/core/generated/locale_keys.g.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/domain/entities/user_entity.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/presentation/cubits/current_user_cubit.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/helpers/ui_alert_helpers.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/string_translate_extension.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_app_bar.dart';
@@ -17,8 +18,9 @@ import '../../ui_models/kyc_form_data.dart';
 part 'step1_controller.dart';
 
 class KycStep1PersonalInfosScreen extends StatelessWidget {
-  final UserEntity currentUser;
-  const KycStep1PersonalInfosScreen({required this.currentUser});
+  final UserEntity? currentUser;
+
+  const KycStep1PersonalInfosScreen({this.currentUser});
 
   @override
   Widget build(BuildContext context) {
@@ -82,43 +84,33 @@ class KycStep1PersonalInfosScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ...genderTitles.keys
-                              .map(
-                                (value) => [
-                                  Flexible(
-                                    child: GestureDetector(
-                                      onTap: () => ctrl.selectGender(value),
-                                      child: Row(
-                                        children: [
-                                          Radio<EGender>.adaptive(
-                                            value: value,
-                                            activeColor: Theme.of(
-                                              context,
-                                            ).colorScheme.primary,
-                                          ),
-                                          Flexible(
-                                            child: FittedBox(
-                                              child: Text(
-                                                genderTitles[value] ?? '',
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                      ...genderTitles.keys
+                          .map(
+                            (value) => [
+                              GestureDetector(
+                                onTap: () => ctrl.selectGender(value),
+                                child: Row(
+                                  children: [
+                                    Radio<EGender>.adaptive(
+                                      value: value,
+                                      activeColor: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
                                     ),
-                                  ),
-                                  const SizedBox(width: 24),
-                                ],
-                              )
-                              .reduce((l1, l2) => [...l1, ...l2]),
-                        ],
-                      ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      genderTitles[value] ?? '',
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              const SizedBox(height: 8),
+                            ],
+                          )
+                          .reduce((l1, l2) => [...l1, ...l2]),
+
                       const SizedBox(height: 32),
                       // --- Validation Button ---
                       KycFormPrimaryButton(onPressed: ctrl.onNext),

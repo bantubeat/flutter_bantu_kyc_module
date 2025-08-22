@@ -1,8 +1,10 @@
 part of 'kyc_step1_personal_infos_screen.dart';
 
 class Step1Controller extends ScreenController {
-  final UserEntity currentUser;
-  Step1Controller(super.state, this.currentUser);
+  final UserEntity? _currentUser;
+
+  Step1Controller(super.state, UserEntity? currentUser)
+    : _currentUser = currentUser ?? Modular.get<CurrentUserCubit>().state.data;
 
   final surnameCtrl = TextEditingController();
   final nameCtrl = TextEditingController();
@@ -43,6 +45,8 @@ class Step1Controller extends ScreenController {
     final gender = selectedGender;
     final firstName = surnameCtrl.text;
     final lastName = nameCtrl.text;
+    final currentUser =
+        _currentUser ?? Modular.get<CurrentUserCubit>().state.requireData;
     if (birthdate != null &&
         gender != null &&
         firstName.isNotEmpty &&

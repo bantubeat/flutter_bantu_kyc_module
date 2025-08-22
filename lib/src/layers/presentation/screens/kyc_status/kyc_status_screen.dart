@@ -81,7 +81,8 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                       buttonText: LocaleKeys
                           .kyc_module_status_screen_success_button_text
                           .tr(),
-                      onButtonPressed: () => Modular.get<OnKycFinishFn>()(true),
+                      onButtonPressed: () => _navigateToKycStep1(currentUser),
+                      // onButtonPressed: () => Modular.get<OnKycFinishFn>()(true),
                     );
                   case EKycStatus.failed:
                     return _KycStatusView(
