@@ -140,34 +140,38 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
               } else if (state is KycNotSubmitted || state is KycError) {
                 // This state would typically lead the user to start the KYC flow
                 return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Visibility(
-                        visible: state is KycError,
-                        replacement: Text(
-                          LocaleKeys.kyc_module_status_screen_kyc_not_submitted
-                              .tr(),
-                        ),
-                        child: Text(
-                          LocaleKeys.kyc_module_common_an_error_occur.tr(
-                            namedArgs: {
-                              'message': state is KycError
-                                  ? state.message
-                                  : 'Aucune demande de KYC soumise.',
-                            },
+                  child: Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Visibility(
+                          visible: state is KycError,
+                          replacement: Text(
+                            LocaleKeys
+                                .kyc_module_status_screen_kyc_not_submitted
+                                .tr(),
                           ),
-                          style: const TextStyle(color: Colors.red),
+                          child: Text(
+                            LocaleKeys.kyc_module_common_an_error_occur.tr(
+                              namedArgs: {
+                                'message': state is KycError
+                                    ? state.message
+                                    : 'Aucune demande de KYC soumise.',
+                              },
+                            ),
+                            style: const TextStyle(color: Colors.red),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      KycFormPrimaryButton(
-                        label: LocaleKeys
-                            .kyc_module_status_screen_start_kyc_verification
-                            .tr(),
-                        onPressed: () => _navigateToKycStep1(currentUser),
-                      ),
-                    ],
+                        const SizedBox(height: 20),
+                        KycFormPrimaryButton(
+                          label: LocaleKeys
+                              .kyc_module_status_screen_start_kyc_verification
+                              .tr(),
+                          onPressed: () => _navigateToKycStep1(currentUser),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }
