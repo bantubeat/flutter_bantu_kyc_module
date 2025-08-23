@@ -9,6 +9,7 @@ import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_for
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_stepper.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../kyc_module.dart';
 import '../../ui_models/kyc_form_data.dart';
 
 /// 5. Selfie Intro Screen
@@ -36,6 +37,8 @@ class KycStep5aAnd6aSelfieIntroScreen extends StatelessWidget {
         : () => Modular.get<KycRoutes>().step6b.push(step5Data);
     return Scaffold(
       appBar: const KycFormAppBar(),
+      floatingActionButton: KycModule.getFloatingMenuWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(

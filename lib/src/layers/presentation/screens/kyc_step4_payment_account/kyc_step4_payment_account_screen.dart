@@ -13,6 +13,7 @@ import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_for
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_stepper.dart';
 import 'package:flutter_screen_controller/flutter_screen_controller.dart';
 
+import '../../kyc_module.dart';
 import '../../ui_models/kyc_form_data.dart';
 import 'widgets/account_type_selector.dart';
 
@@ -25,6 +26,8 @@ class KycStep4PaymentAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const KycFormAppBar(),
+      floatingActionButton: KycModule.getFloatingMenuWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
