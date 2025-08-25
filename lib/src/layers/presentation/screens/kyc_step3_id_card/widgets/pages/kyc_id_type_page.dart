@@ -19,41 +19,46 @@ class _KycIdTypePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height - 200,
-      child: RadioGroup<EVerificationMethod>(
-        groupValue: selectedVerificationMethod,
-        onChanged: onSelectVerificationMethod,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            KycFormHeader(
-              title: LocaleKeys.kyc_module_step3_type_page_title.tr(),
-              subtitle: LocaleKeys.kyc_module_step3_type_page_description.tr(),
-            ),
-            const SizedBox(height: 24),
-            KycFormCountrySelectField(
-              label: LocaleKeys.kyc_module_step3_nationality.tr(),
-              initialSelection: selectedCountry?.code,
-              onChanged: onSelectCountry,
-            ),
-            const SizedBox(height: 24),
-            KycFormLabel(LocaleKeys.kyc_module_step3_verification_method.tr()),
-            _VerificationRadioTile(
-              title: LocaleKeys.kyc_module_step3_id_card.tr(),
-              value: EVerificationMethod.nationalCni,
-            ),
-            _VerificationRadioTile(
-              title: LocaleKeys.kyc_module_step3_passport.tr(),
-              value: EVerificationMethod.passport,
-            ),
-            _VerificationRadioTile(
-              title: LocaleKeys.kyc_module_step3_driving_license.tr(),
-              value: EVerificationMethod.drivingLicense,
-            ),
-            const Spacer(),
-            KycFormPrimaryButton(onPressed: onNext),
-          ],
+    return SingleChildScrollView(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 200,
+        child: RadioGroup<EVerificationMethod>(
+          groupValue: selectedVerificationMethod,
+          onChanged: onSelectVerificationMethod,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              KycFormHeader(
+                title: LocaleKeys.kyc_module_step3_type_page_title.tr(),
+                subtitle: LocaleKeys.kyc_module_step3_type_page_description
+                    .tr(),
+              ),
+              const SizedBox(height: 24),
+              KycFormCountrySelectField(
+                label: LocaleKeys.kyc_module_step3_nationality.tr(),
+                initialSelection: selectedCountry?.code,
+                onChanged: onSelectCountry,
+              ),
+              const SizedBox(height: 24),
+              KycFormLabel(
+                LocaleKeys.kyc_module_step3_verification_method.tr(),
+              ),
+              _VerificationRadioTile(
+                title: LocaleKeys.kyc_module_step3_id_card.tr(),
+                value: EVerificationMethod.nationalCni,
+              ),
+              _VerificationRadioTile(
+                title: LocaleKeys.kyc_module_step3_passport.tr(),
+                value: EVerificationMethod.passport,
+              ),
+              _VerificationRadioTile(
+                title: LocaleKeys.kyc_module_step3_driving_license.tr(),
+                value: EVerificationMethod.drivingLicense,
+              ),
+              const Spacer(),
+              KycFormPrimaryButton(onPressed: onNext),
+            ],
+          ),
         ),
       ),
     );

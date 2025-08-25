@@ -58,8 +58,14 @@ class KycFormDataStep3 {
   });
 }
 
+class KycFormDataStep4 {
+  final KycFormDataStep3 step3Data;
+
+  KycFormDataStep4(this.step3Data);
+}
 // MARK: Payment Info (from KycPaymentScreen)
 
+/*
 enum EAccountType { mobile, bank }
 
 typedef MobilePaymentAccountInfo = ({
@@ -117,6 +123,7 @@ class KycFormDataStep4 {
          bankDocument: bankDocument,
        );
 }
+*/
 
 // MARK: Selfies (from KycSelfieScreen)
 class KycFormDataStep5 {
@@ -143,10 +150,10 @@ class KycFormDataStep6 {
       city: step2Data.city,
       country: step2Data.country.code ?? step1Data.currentUser.pays,
       zipCode: step2Data.postalCode,
-      frontFaceImage: await step3Data.rectoIdImage.readAsBytes(),
-      backFaceImage: await step3Data.versoIdImage.readAsBytes(),
-      normalSelfieImage: await step5Data.selfieImage.readAsBytes(),
-      selfieWithIdCardImage: await selfieWithIdImage.readAsBytes(),
+      frontFaceImagePath: step3Data.rectoIdImage.path,
+      backFaceImagePath: step3Data.versoIdImage.path,
+      normalSelfieImagePath: step5Data.selfieImage.path,
+      selfieWithIdCardImagePath: selfieWithIdImage.path,
       email: step1Data.currentUser.email,
       linkRs: null, // Assuming linkRs is not used in this context
     );

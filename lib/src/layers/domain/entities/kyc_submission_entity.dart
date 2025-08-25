@@ -1,5 +1,3 @@
-import 'dart:typed_data' show Uint8List;
-
 /// A data enity for the KYC (Know Your Customer) form.
 class KycSubmissionEntity {
   final String firstName;
@@ -8,10 +6,10 @@ class KycSubmissionEntity {
   final String city;
   final String country;
   final String? zipCode;
-  final Uint8List frontFaceImage;
-  final Uint8List backFaceImage;
-  final Uint8List selfieWithIdCardImage;
-  final Uint8List normalSelfieImage;
+  final String frontFaceImagePath;
+  final String backFaceImagePath;
+  final String selfieWithIdCardImagePath;
+  final String normalSelfieImagePath;
   final String? linkRs;
   final String email;
 
@@ -26,10 +24,10 @@ class KycSubmissionEntity {
     required this.city,
     required this.country,
     required this.zipCode,
-    required this.frontFaceImage,
-    required this.backFaceImage,
-    required this.selfieWithIdCardImage,
-    required this.normalSelfieImage,
+    required this.frontFaceImagePath,
+    required this.backFaceImagePath,
+    required this.selfieWithIdCardImagePath,
+    required this.normalSelfieImagePath,
     required this.linkRs,
     required this.email,
   });

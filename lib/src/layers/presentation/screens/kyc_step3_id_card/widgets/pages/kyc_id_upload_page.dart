@@ -22,26 +22,28 @@ class _KycIdUploadPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height - 200,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          KycFormHeader(title: title, subtitle: subtitle),
-          const SizedBox(height: 24),
-          KycFormUploadBox(
-            label: LocaleKeys.kyc_module_step3_load_image.tr(),
-            image: pickedImage,
-            onTap: onPickIdImage,
-          ),
-          const SizedBox(height: 24),
-          _KycIdConsentCheckbox(
-            isChecked: isConsentChecked,
-            onChanged: onToggleConsent,
-          ),
-          const Spacer(),
-          KycFormPrimaryButton(onPressed: onNext),
-        ],
+    return SingleChildScrollView(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 200,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            KycFormHeader(title: title, subtitle: subtitle),
+            const SizedBox(height: 24),
+            KycFormUploadBox(
+              label: LocaleKeys.kyc_module_step3_load_image.tr(),
+              image: pickedImage,
+              onTap: onPickIdImage,
+            ),
+            const SizedBox(height: 24),
+            _KycIdConsentCheckbox(
+              isChecked: isConsentChecked,
+              onChanged: onToggleConsent,
+            ),
+            const Spacer(),
+            KycFormPrimaryButton(onPressed: onNext),
+          ],
+        ),
       ),
     );
   }

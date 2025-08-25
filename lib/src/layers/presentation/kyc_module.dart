@@ -27,7 +27,6 @@ import 'navigation/kyc_routes.dart';
 import 'screens/kyc_step1_personal_infos/kyc_step1_personal_infos_screen.dart';
 import 'screens/kyc_step2_address/kyc_step2_address_screen.dart';
 import 'screens/kyc_step3_id_card/kyc_step3_id_card_screen.dart';
-import 'screens/kyc_step4_payment_account/kyc_step4_payment_account_screen.dart';
 import 'screens/kyc_step5b_and_6b_selfie_camera/kyc_step5b_and_6b_selfie_camera_screen.dart';
 import 'screens/kyc_step5a_and_6a_selfie_intro/kyc_step5a_and_6a_selfie_intro_screen.dart';
 
@@ -132,10 +131,10 @@ class KycModule extends Module {
       _routes.step3.wp,
       child: (_) => KycStep3IdCardScreen(step2Data: r.args.data),
     );
-    r.child(
-      _routes.step4.wp,
-      child: (_) => KycStep4PaymentAccountScreen(step3Data: r.args.data),
-    );
+    //r.child(
+    //  _routes.step4.wp,
+    //  child: (_) => KycStep4PaymentAccountScreen(step3Data: r.args.data),
+    //);
     r.child(
       _routes.step5a.wp,
       child: (_) => KycStep5aAnd6aSelfieIntroScreen(step4Data: r.args.data),

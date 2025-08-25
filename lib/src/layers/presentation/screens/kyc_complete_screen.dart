@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../kyc_module.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_app_bar.dart';
 
 class KYCCompleteScreen extends StatelessWidget {
   const KYCCompleteScreen({super.key});
@@ -9,8 +8,8 @@ class KYCCompleteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: KycModule.getFloatingMenuWidget(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+      appBar: const KycFormAppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40.0),

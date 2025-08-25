@@ -39,8 +39,6 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: KycModule.getFloatingMenuWidget(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: true,
@@ -83,8 +81,7 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                       buttonText: LocaleKeys
                           .kyc_module_status_screen_success_button_text
                           .tr(),
-                      onButtonPressed: () => _navigateToKycStep1(currentUser),
-                      // onButtonPressed: () => Modular.get<OnKycFinishFn>()(true),
+                      onButtonPressed: () => Modular.get<OnKycFinishFn>()(true),
                     );
                   case EKycStatus.failed:
                     return _KycStatusView(
@@ -141,7 +138,7 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                 // This state would typically lead the user to start the KYC flow
                 return Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(30),
+                    padding: const EdgeInsets.all(40),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

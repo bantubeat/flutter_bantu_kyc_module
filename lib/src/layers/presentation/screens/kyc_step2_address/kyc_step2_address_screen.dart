@@ -27,9 +27,8 @@ class KycStep2AddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
+
       appBar: const KycFormAppBar(),
-      floatingActionButton: KycModule.getFloatingMenuWidget(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(

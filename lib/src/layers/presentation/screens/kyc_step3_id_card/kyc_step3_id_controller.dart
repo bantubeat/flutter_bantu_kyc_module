@@ -127,7 +127,7 @@ class _KycStep3IdController extends ScreenController {
         versoIdImage: versoIdImageXFile,
       );
 
-      Modular.get<KycRoutes>().step4.push(kycFormData);
+      Modular.get<KycRoutes>().step5a.push(KycFormDataStep4(kycFormData));
     } else {
       UiAlertHelpers.showErrorSnackBar(
         context,

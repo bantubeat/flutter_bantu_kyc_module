@@ -1,5 +1,3 @@
-import 'dart:typed_data' show Uint8List;
-
 import 'package:dio/dio.dart' show FormData, MultipartFile;
 
 import '../../../core/network/my_http/my_http.dart';
@@ -64,10 +62,10 @@ final class BantubeatApiDataSource {
     required String city,
     required String country,
     String? zipCode,
-    required Uint8List frontFaceImageBytes,
-    required Uint8List backFaceImageBytes,
-    required Uint8List normalSelfieImageBytes,
-    required Uint8List selfieWithIdCardImageBytes,
+    required String frontFaceImagePath,
+    required String backFaceImagePath,
+    required String normalSelfieImagePath,
+    required String selfieWithIdCardImagePath,
     required String? linkRs,
     required String email,
   }) async {
@@ -79,11 +77,11 @@ final class BantubeatApiDataSource {
         'city': city,
         'country': country.toUpperCase(),
         'zip_code': zipCode,
-        'front_face_image': MultipartFile.fromBytes(frontFaceImageBytes),
-        'back_face_image': MultipartFile.fromBytes(backFaceImageBytes),
-        'normal_selfie_image': MultipartFile.fromBytes(normalSelfieImageBytes),
-        'selfie_with_id_card_image': MultipartFile.fromBytes(
-          selfieWithIdCardImageBytes,
+        'front_face_image': MultipartFile.fromFile(frontFaceImagePath),
+        'back_face_image': MultipartFile.fromFile(backFaceImagePath),
+        'normal_selfie_image': MultipartFile.fromFile(normalSelfieImagePath),
+        'selfie_with_id_card_image': MultipartFile.fromFile(
+          selfieWithIdCardImagePath,
         ),
         'link_rs': linkRs,
         'email': email,
