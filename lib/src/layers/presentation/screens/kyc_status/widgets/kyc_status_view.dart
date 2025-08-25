@@ -19,6 +19,17 @@ class _KycStatusView extends StatelessWidget {
     this.isFailed = false,
   });
 
+  static _KycStatusView loading() {
+    return _KycStatusView(
+      icon: Icons.hourglass_empty,
+      iconColor: Colors.grey,
+      title: LocaleKeys.kyc_module_status_screen_pending_title.tr(),
+      message: LocaleKeys.kyc_module_status_screen_pending_message.tr(),
+      buttonText: LocaleKeys.kyc_module_status_screen_pending_button_text.tr(),
+      onButtonPressed: () {},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

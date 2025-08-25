@@ -51,9 +51,13 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         centerTitle: true,
+        backgroundColor: Colors.transparent,
         title: Text(LocaleKeys.kyc_module_status_screen_title.tr()),
+        leading: IconButton(
+          onPressed: () => Modular.to.pop(),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+        ),
       ),
       body: BlocBuilder<CurrentUserCubit, AsyncSnapshot<UserEntity>>(
         bloc: Modular.get(),
@@ -64,20 +68,7 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
             builder: (context, state) {
               final currentUser = userSnapshot.data;
               if (state is KycLoading || currentUser == null) {
-                return Skeletonizer(
-                  child: _KycStatusView(
-                    icon: Icons.hourglass_empty,
-                    iconColor: Colors.grey,
-                    title: LocaleKeys.kyc_module_status_screen_pending_title
-                        .tr(),
-                    message: LocaleKeys.kyc_module_status_screen_pending_message
-                        .tr(),
-                    buttonText: LocaleKeys
-                        .kyc_module_status_screen_pending_button_text
-                        .tr(),
-                    onButtonPressed: () {},
-                  ),
-                );
+                return Skeletonizer(child: _KycStatusView.loading());
               } else if (state is KycStatusLoaded) {
                 switch (state.kyc.status) {
                   case EKycStatus.success:
@@ -142,7 +133,7 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                       buttonText: LocaleKeys
                           .kyc_module_status_screen_unknown_button_text
                           .tr(),
-                      onButtonPressed: () {},
+                      onButtonPressed: () => Modular.get<OnKycFinishFn>()(null),
                     );
                 }
               } else if (state is KycNotSubmitted || state is KycError) {
@@ -177,6 +168,15 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                               .kyc_module_status_screen_start_kyc_verification
                               .tr(),
                           onPressed: () => _navigateToKycStep1(currentUser),
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () => Modular.get<OnKycFinishFn>()(null),
+                          child: Text(
+                            LocaleKeys
+                                .kyc_module_status_screen_success_button_text
+                                .tr(),
+                          ),
                         ),
                       ],
                     ),
