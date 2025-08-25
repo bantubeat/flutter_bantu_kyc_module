@@ -74,9 +74,13 @@ class KycModule extends Module {
     const withCacheKey = 'with_cache_key';
     i.addLazySingleton<bool>(() => isProduction, key: _isProductionKey);
     // Core
-    i.addLazySingleton<MyHttpClient>(_initMyHttpClient(withCache: false));
+    i.addLazySingleton<MyHttpClient>(
+      _initMyHttpClient(withCache: false),
+      config: BindConfig(onDispose: (client) => client.close()),
+    );
     i.addLazySingleton<MyHttpClient>(
       _initMyHttpClient(withCache: true),
+      config: BindConfig(onDispose: (client) => client.close()),
       key: withCacheKey,
     );
 

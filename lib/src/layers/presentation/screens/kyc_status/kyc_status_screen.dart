@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bantu_kyc_module/flutter_bantu_kyc_module.dart';
+import 'package:flutter/services.dart' show SystemChrome, SystemUiOverlayStyle;
 import 'package:flutter_bantu_kyc_module/src/core/generated/locale_keys.g.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/domain/entities/enums/kyc_status.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/domain/entities/user_entity.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/cubits/current_user_cubit.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/cubits/kyc/kyc_cubit.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/cubits/kyc/kyc_state.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/presentation/kyc_module.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/string_translate_extension.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/presentation/navigation/kyc_routes.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_primary_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
-import '../../../domain/entities/user_entity.dart';
 
 part 'widgets/kyc_status_view.dart';
 
@@ -28,6 +29,16 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
     super.initState();
     Modular.get<CurrentUserCubit>().fetchCurrentUser(forceRefresh: false);
     Modular.get<KycCubit>().checkKycStatus();
+
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor:
+            Colors.transparent, // Or any light color for the background
+        statusBarIconBrightness: Brightness.dark, // Makes icons and text dark
+        statusBarBrightness: Brightness
+            .light, // For iOS, sets the status bar content to light (dark icons)
+      ),
+    );
   }
 
   // Navigate to the start of the KYC flow

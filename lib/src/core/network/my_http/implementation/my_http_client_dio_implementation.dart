@@ -17,11 +17,11 @@ class MyHttpClientDioImplemenation extends MyHttpClient {
     super.getAccessToken,
     super.refreshAccessToken,
   }) : _dio = Dio(
-          BaseOptions(
-            baseUrl: _removeTrailingSlash(baseUrl),
-            headers: {'Accept': 'application/json'},
-          ),
-        ) {
+         BaseOptions(
+           baseUrl: _removeTrailingSlash(baseUrl),
+           headers: {'Accept': 'application/json'},
+         ),
+       ) {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -134,16 +134,14 @@ class MyHttpClientDioImplemenation extends MyHttpClient {
             ),
           ),
         )
-        .catchError(
-      (err) {
-        debugPrint('[MyHttpClient - error] $err');
-        final dioException = err is DioException ? err : null;
-        return throwMyHttpException<MyHttpResponse<T>>(
-          statusCode: dioException?.response?.statusCode,
-          errorBody: dioException?.response?.data,
-        );
-      },
-    );
+        .catchError((err) {
+          debugPrint('[MyHttpClient - error] $err');
+          final dioException = err is DioException ? err : null;
+          return throwMyHttpException<MyHttpResponse<T>>(
+            statusCode: dioException?.response?.statusCode,
+            errorBody: dioException?.response?.data,
+          );
+        });
   }
 
   @override

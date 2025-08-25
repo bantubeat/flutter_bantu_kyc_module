@@ -77,13 +77,15 @@ final class BantubeatApiDataSource {
         'city': city,
         'country': country.toUpperCase(),
         'zip_code': zipCode,
-        'front_face_image': MultipartFile.fromFile(frontFaceImagePath),
-        'back_face_image': MultipartFile.fromFile(backFaceImagePath),
-        'normal_selfie_image': MultipartFile.fromFile(normalSelfieImagePath),
-        'selfie_with_id_card_image': MultipartFile.fromFile(
+        'front_face_image': await MultipartFile.fromFile(frontFaceImagePath),
+        'back_face_image': await MultipartFile.fromFile(backFaceImagePath),
+        'normal_selfie_image': await MultipartFile.fromFile(
+          normalSelfieImagePath,
+        ),
+        'selfie_with_id_card_image': await MultipartFile.fromFile(
           selfieWithIdCardImagePath,
         ),
-        'link_rs': linkRs,
+        'link_rs': linkRs ?? '#',
         'email': email,
         'is_company': 0,
       });
