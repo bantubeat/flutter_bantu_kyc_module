@@ -21,7 +21,7 @@ class Step1Controller extends ScreenController {
   String get pickedBirthdate {
     final dt = _pickedBirthdate;
     if (dt == null) return '';
-    return '${dt.year}-${dt.month}-${dt.day}';
+    return '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
   }
 
   void selectGender(EGender? newGender) {
