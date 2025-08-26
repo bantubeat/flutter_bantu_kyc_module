@@ -55,7 +55,7 @@ final class BantubeatApiDataSource {
     return _client.delete('/account/kyc').then((_) {});
   }
 
-  Future<KycModel> post$accountKyc({
+  Future<void> post$accountKyc({
     required String firstName,
     String? lastName,
     required String address,
@@ -90,9 +90,7 @@ final class BantubeatApiDataSource {
         'is_company': 0,
       });
 
-      final response = await _client.post('/account/kyc', body: formData);
-
-      return KycModel.fromJson(response.data);
+      await _client.post('/account/kyc', body: formData);
     } on MyHttpException catch (e) {
       throw ServerException(e.message ?? 'Unknown error', e.statusCode);
     }

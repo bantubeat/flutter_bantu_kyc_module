@@ -46,6 +46,10 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
     Modular.get<KycRoutes>().step1.navigate(currentUser);
   }
 
+  void _goBack([bool? result]) {
+    KycModule.getOnKycFinishFn()(result);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,146 +58,153 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(LocaleKeys.kyc_module_status_screen_title.tr()),
-        leading: IconButton(
-          onPressed: () => Modular.to.pop(),
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-        ),
       ),
-      body: BlocBuilder<CurrentUserCubit, AsyncSnapshot<UserEntity>>(
-        bloc: Modular.get(),
-        builder: (context, userSnapshot) => Skeletonizer(
-          enabled: userSnapshot.connectionState == ConnectionState.waiting,
-          child: BlocBuilder<KycCubit, KycState>(
-            bloc: Modular.get(),
-            builder: (context, state) {
-              final currentUser = userSnapshot.data;
-              if (state is KycLoading || currentUser == null) {
-                return Skeletonizer(child: _KycStatusView.loading());
-              } else if (state is KycStatusLoaded) {
-                switch (state.kyc.status) {
-                  case EKycStatus.success:
-                    return _KycStatusView(
-                      icon: Icons.check_circle,
-                      iconColor: Colors.green,
-                      title: LocaleKeys.kyc_module_status_screen_success_title
-                          .tr(),
-                      message: LocaleKeys
-                          .kyc_module_status_screen_success_message
-                          .tr(),
-                      buttonText: LocaleKeys
-                          .kyc_module_status_screen_success_button_text
-                          .tr(),
-                      onButtonPressed: () => Modular.get<OnKycFinishFn>()(true),
-                    );
-                  case EKycStatus.failed:
-                    return _KycStatusView(
-                      icon: Icons.cancel,
-                      iconColor: Colors.red,
-                      title: LocaleKeys.kyc_module_status_screen_failed_title
-                          .tr(),
-                      message: LocaleKeys
-                          .kyc_module_status_screen_failed_message
-                          .tr(
-                            namedArgs: {
-                              'message': state.kyc.adminMessage ?? 'N/A',
-                            },
-                          ),
-                      buttonText: LocaleKeys
-                          .kyc_module_status_screen_failed_button_text
-                          .tr(),
-                      onButtonPressed: () => _navigateToKycStep1(currentUser),
-                      isFailed: true,
-                    );
-                  case EKycStatus.pending:
-                    return _KycStatusView(
-                      icon: Icons.hourglass_empty,
-                      iconColor: Colors.orange,
-                      title: LocaleKeys.kyc_module_status_screen_pending_title
-                          .tr(),
-                      message: LocaleKeys
-                          .kyc_module_status_screen_pending_message
-                          .tr(),
-                      buttonText: LocaleKeys
-                          .kyc_module_status_screen_pending_button_text
-                          .tr(),
-                      onButtonPressed: () {
-                        // Implement cancellation logic
-                        BlocProvider.of<KycCubit>(context).cancelKyc();
-                      },
-                    );
-                  default:
-                    return _KycStatusView(
-                      icon: Icons.help_outline,
-                      iconColor: Colors.grey,
-                      title: LocaleKeys.kyc_module_status_screen_unknown_title
-                          .tr(),
-                      message: LocaleKeys
-                          .kyc_module_status_screen_unknown_message
-                          .tr(),
-                      buttonText: LocaleKeys
-                          .kyc_module_status_screen_unknown_button_text
-                          .tr(),
-                      onButtonPressed: () => Modular.get<OnKycFinishFn>()(null),
-                    );
-                }
-              } else if (state is KycNotSubmitted || state is KycError) {
-                // This state would typically lead the user to start the KYC flow
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(40),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Visibility(
-                          visible: state is KycError,
-                          replacement: Text(
-                            LocaleKeys
-                                .kyc_module_status_screen_kyc_not_submitted
-                                .tr(),
-                          ),
-                          child: Text(
-                            LocaleKeys.kyc_module_common_an_error_occur.tr(
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 100),
+        child: BlocBuilder<CurrentUserCubit, AsyncSnapshot<UserEntity>>(
+          bloc: Modular.get(),
+          builder: (context, userSnapshot) => Skeletonizer(
+            enabled: userSnapshot.connectionState == ConnectionState.waiting,
+            child: BlocBuilder<KycCubit, KycState>(
+              bloc: Modular.get(),
+              builder: (context, state) {
+                final currentUser = userSnapshot.data;
+                if (state is KycLoading || currentUser == null) {
+                  return Skeletonizer(child: _KycStatusView.loading());
+                } else if (state is KycStatusLoaded) {
+                  switch (state.kyc.status) {
+                    case EKycStatus.success:
+                      return _KycStatusView(
+                        icon: Icons.check_circle,
+                        iconColor: Colors.green,
+                        title: LocaleKeys.kyc_module_status_screen_success_title
+                            .tr(),
+                        message: LocaleKeys
+                            .kyc_module_status_screen_success_message
+                            .tr(),
+                        buttonText: LocaleKeys
+                            .kyc_module_status_screen_success_button_text
+                            .tr(),
+                        onButtonPressed: () => _goBack(true),
+                        onCancelPressed: _goBack,
+                      );
+                    case EKycStatus.failed:
+                      return _KycStatusView(
+                        icon: Icons.cancel,
+                        iconColor: Colors.red,
+                        title: LocaleKeys.kyc_module_status_screen_failed_title
+                            .tr(),
+                        message: LocaleKeys
+                            .kyc_module_status_screen_failed_message
+                            .tr(
                               namedArgs: {
-                                'message': state is KycError
-                                    ? state.message
-                                    : 'Aucune demande de KYC soumise.',
+                                'message': state.kyc.adminMessage ?? 'N/A',
                               },
                             ),
-                            style: const TextStyle(color: Colors.red),
+                        buttonText: LocaleKeys
+                            .kyc_module_status_screen_failed_button_text
+                            .tr(),
+                        onButtonPressed: () => _navigateToKycStep1(currentUser),
+                        isFailed: true,
+                        showCancelButton: true,
+                        onCancelPressed: _goBack,
+                      );
+                    case EKycStatus.pending:
+                      return _KycStatusView(
+                        icon: Icons.hourglass_empty,
+                        iconColor: Colors.orange,
+                        title: LocaleKeys.kyc_module_status_screen_pending_title
+                            .tr(),
+                        message: LocaleKeys
+                            .kyc_module_status_screen_pending_message
+                            .tr(),
+                        buttonText: LocaleKeys
+                            .kyc_module_status_screen_pending_button_text
+                            .tr(),
+                        showCancelButton: true,
+                        onButtonPressed: () {
+                          // Implement cancellation logic
+                          BlocProvider.of<KycCubit>(context).cancelKyc();
+                        },
+                        onCancelPressed: _goBack,
+                      );
+                    default:
+                      return _KycStatusView(
+                        icon: Icons.help_outline,
+                        iconColor: Colors.grey,
+                        title: LocaleKeys.kyc_module_status_screen_unknown_title
+                            .tr(),
+                        message: LocaleKeys
+                            .kyc_module_status_screen_unknown_message
+                            .tr(),
+                        buttonText: LocaleKeys
+                            .kyc_module_status_screen_unknown_button_text
+                            .tr(),
+                        onButtonPressed: _goBack,
+                        onCancelPressed: _goBack,
+                      );
+                  }
+                } else if (state is KycNotSubmitted || state is KycError) {
+                  // This state would typically lead the user to start the KYC flow
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(40),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Visibility(
+                            visible: state is KycError,
+                            replacement: Text(
+                              LocaleKeys
+                                  .kyc_module_status_screen_kyc_not_submitted
+                                  .tr(),
+                            ),
+                            child: Text(
+                              LocaleKeys.kyc_module_common_an_error_occur.tr(
+                                namedArgs: {
+                                  'message': state is KycError
+                                      ? state.message
+                                      : 'Aucune demande de KYC soumise.',
+                                },
+                              ),
+                              style: const TextStyle(color: Colors.red),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        KycFormPrimaryButton(
-                          label: LocaleKeys
-                              .kyc_module_status_screen_start_kyc_verification
-                              .tr(),
-                          onPressed: () => _navigateToKycStep1(currentUser),
-                        ),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () => Modular.get<OnKycFinishFn>()(null),
-                          child: Text(
-                            LocaleKeys
-                                .kyc_module_status_screen_success_button_text
+                          const SizedBox(height: 20),
+                          KycFormPrimaryButton(
+                            label: LocaleKeys
+                                .kyc_module_status_screen_start_kyc_verification
                                 .tr(),
+                            onPressed: () => _navigateToKycStep1(currentUser),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () => KycModule.getOnKycFinishFn()(null),
+                            child: Text(
+                              LocaleKeys
+                                  .kyc_module_status_screen_success_button_text
+                                  .tr(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return Center(
+                  child: Text(
+                    LocaleKeys.kyc_module_common_an_error_occur.tr(
+                      namedArgs: {'message': 'Unknown state'},
                     ),
                   ),
                 );
-              }
-              return Center(
-                child: Text(
-                  LocaleKeys.kyc_module_common_an_error_occur.tr(
-                    namedArgs: {'message': 'Unknown state'},
-                  ),
-                ),
-              );
-            },
+              },
+            ),
           ),
         ),
       ),
+      floatingActionButton: KycModule.getFloatingMenuWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bantu_kyc_module/src/core/generated/locale_keys.g.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/string_translate_extension.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../kyc_module.dart';
 
@@ -12,7 +11,7 @@ class KycFormAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   void _onClosePressed() {
-    Modular.get<OnKycFinishFn>()(false);
+    KycModule.getOnKycFinishFn()(false);
   }
 
   @override

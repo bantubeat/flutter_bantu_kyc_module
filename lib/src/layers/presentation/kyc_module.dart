@@ -69,6 +69,10 @@ class KycModule extends Module {
     return Modular.get<Widget>(key: _floatingMenuBuilderKey);
   }
 
+  static OnKycFinishFn getOnKycFinishFn() {
+    return Modular.get<OnKycFinishFn>(key: _onFinishKey);
+  }
+
   @override
   void binds(i) {
     const withCacheKey = 'with_cache_key';

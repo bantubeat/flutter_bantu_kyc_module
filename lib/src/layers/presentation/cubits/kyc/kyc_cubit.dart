@@ -36,7 +36,7 @@ class KycCubit extends Cubit<KycState> {
     final result = await _submitKycUseCase(submission);
     result.fold(
       (failure) => emit(KycError(failure.message)),
-      (_) => emit(KycSubmissionSuccess()),
+      (_) => checkKycStatus(),
     );
   }
 
@@ -50,6 +50,6 @@ class KycCubit extends Cubit<KycState> {
       } else {
         emit(KycError(failure.message));
       }
-    }, (_) => emit(KycNotSubmitted()));
+    }, (_) => checkKycStatus());
   }
 }

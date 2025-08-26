@@ -8,6 +8,8 @@ class _KycStatusView extends StatelessWidget {
   final String buttonText;
   final VoidCallback onButtonPressed;
   final bool isFailed;
+  final bool showCancelButton;
+  final VoidCallback onCancelPressed;
 
   const _KycStatusView({
     required this.icon,
@@ -16,7 +18,9 @@ class _KycStatusView extends StatelessWidget {
     required this.message,
     required this.buttonText,
     required this.onButtonPressed,
+    required this.onCancelPressed,
     this.isFailed = false,
+    this.showCancelButton = false,
   });
 
   static _KycStatusView loading() {
@@ -26,6 +30,7 @@ class _KycStatusView extends StatelessWidget {
       title: LocaleKeys.kyc_module_status_screen_pending_title.tr(),
       message: LocaleKeys.kyc_module_status_screen_pending_message.tr(),
       buttonText: LocaleKeys.kyc_module_status_screen_pending_button_text.tr(),
+      onCancelPressed: () => {},
       onButtonPressed: () {},
     );
   }
@@ -75,6 +80,15 @@ class _KycStatusView extends StatelessWidget {
               ),
             const Spacer(),
             KycFormPrimaryButton(label: buttonText, onPressed: onButtonPressed),
+
+            if (showCancelButton) const SizedBox(height: 20),
+            if (showCancelButton)
+              ElevatedButton(
+                onPressed: onCancelPressed,
+                child: Text(
+                  LocaleKeys.kyc_module_status_screen_success_button_text.tr(),
+                ),
+              ),
           ],
         ),
       ),
