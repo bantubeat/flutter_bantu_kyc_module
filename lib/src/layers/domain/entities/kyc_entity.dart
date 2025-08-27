@@ -18,6 +18,9 @@ class KycEntity extends Equatable {
   final String? adminMessage;
   final String? linkRs;
   final String? email;
+  final bool isCompany;
+  final String? companyRegistrationNumber;
+  final String? companyTva;
 
   const KycEntity({
     required this.uuid,
@@ -35,8 +38,11 @@ class KycEntity extends Equatable {
     required this.adminMessage,
     required this.linkRs,
     required this.email,
+    required this.isCompany,
+    required this.companyRegistrationNumber,
+    required this.companyTva,
   });
 
   @override
-  List<Object?> get props => [uuid, status, firstName, lastName];
+  List<Object?> get props => [uuid, status, firstName, lastName, isCompany];
 }

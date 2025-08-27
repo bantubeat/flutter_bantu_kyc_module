@@ -89,23 +89,16 @@ const Map<String, dynamic> langMap = {
 			"pick_recto_page_description": "Upload a readable image of the front of your ID document"
 		},
     "step4": {
-      "title": "Payment Account",
-      "description":
-          "Please choose and enter the details of your payment account to which you wish to receive your payments",
-      "account_type": "Account type",
-      "mobile_operator_name": "Mobile operator name",
-      "account_number": "Account number",
-			"confirm_account_number": "Confirm account number",
-			"bank_name": "Bank name",
-			"swift_code": "Swift Code",
-      "account_holder": "Account holder",
-      "load_bank_docs": "Upload a bank document/card",
-			"mobile_payment": "Mobile Payment",
-			"mobile_payment_way": "Instantly",
-			"bank_account": "Bank Account",
-			"bank_account_way": "Bank transfer",
-			"add_payment_acconut": "Add a payment account",
-			"bad_account_number_confirmation": "Bad account number confirmation"
+			"title": "Tax Information",
+      "description": "Enter your tax identification number or unique number depending on the country you are in",
+      "account_type": "Account Type",
+      "account_type_particular": "Individual",
+      "account_type_company": "Business",
+      "nui_number": "Tax ID or unique number/National ID number",
+      "company_name": "Company name",
+      "company_registration_number": "Company registration number",
+      "company_vat_number": "VAT number/Company number",
+      "upload_file": "Upload an official document"
     },
     "step5": {
       "title": "Selfie",

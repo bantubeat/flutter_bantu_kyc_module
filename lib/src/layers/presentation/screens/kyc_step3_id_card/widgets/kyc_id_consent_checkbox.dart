@@ -20,9 +20,12 @@ class _KycIdConsentCheckbox extends StatelessWidget {
           activeColor: Theme.of(context).colorScheme.primary,
         ),
         Expanded(
-          child: Text(
-            LocaleKeys.kyc_module_step3_warning.tr(),
-            style: const TextStyle(fontSize: 12),
+          child: GestureDetector(
+            onTap: () => onChanged(!isChecked),
+            child: Text(
+              LocaleKeys.kyc_module_step3_warning.tr(),
+              style: const TextStyle(fontSize: 12),
+            ),
           ),
         ),
       ],

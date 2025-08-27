@@ -22,6 +22,9 @@ class KycModel extends KycEntity {
     required super.normalSelfieImageUrl,
     required super.linkRs,
     required super.email,
+    required super.isCompany,
+    required super.companyRegistrationNumber,
+    required super.companyTva,
     required super.adminMessage,
   });
 
@@ -42,7 +45,24 @@ class KycModel extends KycEntity {
       adminMessage: json['admin_message'],
       linkRs: json['link_rs'],
       email: json['email'],
+      isCompany: _parseBool(json['is_company']),
+      companyRegistrationNumber: json['company_registration_number'],
+      companyTva: json['company_tva'],
     );
+  }
+
+  static bool _parseBool(dynamic value, {bool parseNull = false}) {
+    if (value == null && parseNull) return false;
+    if (value is bool) return value;
+    if (value is num || value is int || value is double) return value != 0;
+    if (value is String) {
+      final boolVal = bool.tryParse(value, caseSensitive: false);
+      if (boolVal != null) return boolVal;
+      final numValue = num.tryParse(value);
+      if (numValue != null) return numValue != 0;
+    }
+
+    throw ArgumentError('Cannot parse bool from $value');
   }
 
   static EKycStatus _statusFromString(String status) {

@@ -58,72 +58,25 @@ class KycFormDataStep3 {
   });
 }
 
-class KycFormDataStep4 {
-  final KycFormDataStep3 step3Data;
-
-  KycFormDataStep4(this.step3Data);
-}
-// MARK: Payment Info (from KycPaymentScreen)
-
-/*
-enum EAccountType { mobile, bank }
-
-typedef MobilePaymentAccountInfo = ({
-  CountryCode paymentCountry,
-  String mobileOperator,
-  String mobileAccountNumber,
-  String accountHolderName,
-  XFile? otherDocument,
-});
-typedef BankPaymentAccountInfo = ({
-  String bankName,
-  String bankAccountNumber,
-  String bankSwiftCode,
-  String accountHolderName,
-  XFile? bankDocument,
-});
+// MARK: Fiscal Info (from KycFiscalInfoScreen)
 
 class KycFormDataStep4 {
   final KycFormDataStep3 step3Data;
-  final EAccountType accountType;
-  final MobilePaymentAccountInfo? mobileAccountInfo;
-  final BankPaymentAccountInfo? bankAccountInfo;
+  final bool isCompany;
+  final String companyRegistrationNumber;
+  final String? companyTva;
+  final String companyName;
+  final XFile? fiscalDocument;
 
-  KycFormDataStep4.mobilePayment({
+  const KycFormDataStep4({
     required this.step3Data,
-    required CountryCode paymentCountry,
-    required String mobileOperator,
-    required String mobileAccountNumber,
-    required String accountHolderName,
-    required XFile? otherDocument,
-  }) : accountType = EAccountType.mobile,
-       mobileAccountInfo = (
-         paymentCountry: paymentCountry,
-         mobileOperator: mobileOperator,
-         mobileAccountNumber: mobileAccountNumber,
-         accountHolderName: accountHolderName,
-         otherDocument: otherDocument,
-       ),
-       bankAccountInfo = null;
-
-  KycFormDataStep4.bankPayment({
-    required this.step3Data,
-    required String bankName,
-    required String bankAccountNumber,
-    required String bankSwiftCode,
-    required String accountHolderName,
-    required XFile? bankDocument,
-  }) : accountType = EAccountType.bank,
-       mobileAccountInfo = null,
-       bankAccountInfo = (
-         bankName: bankName,
-         bankAccountNumber: bankAccountNumber,
-         bankSwiftCode: bankSwiftCode,
-         accountHolderName: accountHolderName,
-         bankDocument: bankDocument,
-       );
+    required this.isCompany,
+    required this.companyRegistrationNumber,
+    required this.companyName,
+    required this.companyTva,
+    required this.fiscalDocument,
+  });
 }
-*/
 
 // MARK: Selfies (from KycSelfieScreen)
 class KycFormDataStep5 {
@@ -140,9 +93,10 @@ class KycFormDataStep6 {
   KycFormDataStep6({required this.step5Data, required this.selfieWithIdImage});
 
   Future<KycSubmissionEntity> toSubmission() async {
-    final step1Data = step5Data.step4Data.step3Data.step2Data.previousData;
-    final step2Data = step5Data.step4Data.step3Data.step2Data;
-    final step3Data = step5Data.step4Data.step3Data;
+    final step4Data = step5Data.step4Data;
+    final step3Data = step4Data.step3Data;
+    final step2Data = step3Data.step2Data;
+    final step1Data = step2Data.previousData;
     return KycSubmissionEntity(
       firstName: step1Data.firstName,
       lastName: step1Data.lastName,
@@ -156,6 +110,16 @@ class KycFormDataStep6 {
       selfieWithIdCardImagePath: selfieWithIdImage.path,
       email: step1Data.currentUser.email,
       linkRs: null, // Assuming linkRs is not used in this context
+      company: step4Data.isCompany
+          ? (
+              name: step4Data.companyName,
+              registrationNumber: step4Data.companyRegistrationNumber,
+              tva: step4Data.companyTva,
+            )
+          : null,
+      particular: !step4Data.isCompany
+          ? (registrationNumber: step4Data.companyRegistrationNumber)
+          : null,
     );
   }
 }

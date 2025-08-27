@@ -13,6 +13,9 @@ class KycSubmissionEntity {
   final String? linkRs;
   final String email;
 
+  final ({String name, String registrationNumber, String? tva})? company;
+  final ({String registrationNumber})? particular;
+
   /// Creates a [KycSubmissionEntity] instance.
   ///
   /// Note that company-related fields are nullable as they are only
@@ -30,5 +33,7 @@ class KycSubmissionEntity {
     required this.normalSelfieImagePath,
     required this.linkRs,
     required this.email,
+    required this.company,
+    required this.particular,
   });
 }

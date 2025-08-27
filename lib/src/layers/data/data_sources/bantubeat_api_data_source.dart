@@ -68,7 +68,10 @@ final class BantubeatApiDataSource {
     required String selfieWithIdCardImagePath,
     required String? linkRs,
     required String email,
+    ({String name, String registrationNumber, String? tva})? company,
+    ({String registrationNumber})? particular,
   }) async {
+    assert(company != null || particular != null);
     try {
       final formData = FormData.fromMap({
         'first_name': firstName,
@@ -87,7 +90,15 @@ final class BantubeatApiDataSource {
         ),
         'link_rs': linkRs ?? '#',
         'email': email,
-        'is_company': 0,
+        'is_company': company != null,
+        if (company != null) ...{
+          'company_name': company.name,
+          'company_registration_number': company.registrationNumber,
+          'company_tva': company.tva,
+        },
+        if (particular != null) ...{
+          'company_registration_number': particular.registrationNumber,
+        },
       });
 
       await _client.post('/account/kyc', body: formData);

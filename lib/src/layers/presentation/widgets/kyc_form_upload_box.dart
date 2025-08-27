@@ -4,8 +4,8 @@ import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/st
 
 class KycFormUploadBox extends StatelessWidget {
   final String label;
-  final ImageProvider<Object>? image;
   final VoidCallback onTap;
+  final ImageProvider<Object>? image;
 
   const KycFormUploadBox({
     required this.label,

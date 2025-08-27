@@ -41,12 +41,12 @@ class KycStepper extends StatelessWidget {
           title: LocaleKeys.kyc_module_stepper_step3.tr(),
         ),
         connector,
-        // _Step(
-        //   step: ++i,,
-        //   currentStep: currentStep,
-        //   title: LocaleKeys.kyc_module_stepper_step4.tr(),
-        // ),
-        // connector,
+        _Step(
+          step: ++i,
+          currentStep: currentStep,
+          title: LocaleKeys.kyc_module_stepper_step4.tr(),
+        ),
+        connector,
         _Step(
           step: ++i,
           currentStep: currentStep,

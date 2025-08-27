@@ -40,7 +40,7 @@ class KycStep5aAnd6aSelfieIntroScreen extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
-            KycStepper(currentStep: isStep5 ? 4 : 5),
+            KycStepper(currentStep: isStep5 ? 5 : 6),
             const SizedBox(height: 32),
             Expanded(
               child: KycFormCard(

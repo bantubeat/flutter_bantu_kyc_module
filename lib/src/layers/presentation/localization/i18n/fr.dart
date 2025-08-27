@@ -41,10 +41,10 @@ const Map<String, dynamic> langMap = {
 			"start_kyc_verification" : "Commencer la vérification KYC"
 		},
     "stepper": {
-      "step1": "Données personnelles",
+      "step1": "Données perso.",
       "step2": "Résidence",
       "step3": "Carte Identité",
-      "step4": "Compte Paiement",
+      "step4": "Infos Fiscales",
       "step5": "Selfie",
       "step6": "Selfie+ ID Card"
     },
@@ -89,23 +89,16 @@ const Map<String, dynamic> langMap = {
 			"pick_recto_page_description": "Charger une image lisible du recto de votre carte d'identité"
     },
     "step4": {
-      "title": "Compte de paiement",
-      "description":
-          "Veuillez choisir et saisir les coordonnées de votre compte de paiement sur lequel vous voulez recevoir vos paiements",
+      "title": "Informations fiscales",
+      "description": "Entrer votre numéro d’identification fiscal ou unique selon le pays dans lequel vous êtes",
       "account_type": "Type de compte",
-      "mobile_operator_name": "Nom de l'opérateur Mobile",
-      "account_number": "Numéro de compte",
-			"confirm_account_number": "Confirmer le numéro de compte",
-			"bank_name": "Nom de la banque",
-			"swift_code": "Code Swift",
-      "account_holder": "Titulaire",
-      "load_bank_docs": "Charger un document/carte bancaire",
-			"mobile_payment": "Paiement Mobile",
-			"mobile_payment_way": "Instantanément",
-			"bank_account": "Compte Bancaire",
-			"bank_account_way": "Virement bancaire",
-			"add_payment_acconut": "Ajouter un Compte de paiement",
-			"bad_account_number_confirmation": "La confirmation du numéro de compte est incorrect"
+      "account_type_particular": "Particulier",
+      "account_type_company": "Entreprise",
+      "nui_number": "Numéro d’identification fiscale ou unique/N° national",
+      "company_name": "Nom de l'entreprise",
+      "company_registration_number": "Numéro d’enregistrement de l’entreprise",
+      "company_tva_number": "Numéro de TVA/Numéro d’entreprise",
+			"upload_file": "Charger un document officiel"
     },
     "step5": {
       "title": "Selfie",
