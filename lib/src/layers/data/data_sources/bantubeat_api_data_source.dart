@@ -90,7 +90,7 @@ final class BantubeatApiDataSource {
         ),
         'link_rs': linkRs ?? '#',
         'email': email,
-        'is_company': company != null,
+        'is_company': company != null ? 1 : 0,
         if (company != null) ...{
           'company_name': company.name,
           'company_registration_number': company.registrationNumber,

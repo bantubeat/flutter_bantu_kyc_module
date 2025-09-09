@@ -56,10 +56,10 @@ class KycModel extends KycEntity {
     if (value is bool) return value;
     if (value is num || value is int || value is double) return value != 0;
     if (value is String) {
-      final boolVal = bool.tryParse(value, caseSensitive: false);
-      if (boolVal != null) return boolVal;
       final numValue = num.tryParse(value);
       if (numValue != null) return numValue != 0;
+      final boolVal = bool.tryParse(value, caseSensitive: false);
+      if (boolVal != null) return boolVal;
     }
 
     throw ArgumentError('Cannot parse bool from $value');
