@@ -45,6 +45,7 @@ class KycStep5bAnd6bSelfieCameraScreen extends StatelessWidget {
                 const Center(child: CircularProgressIndicator.adaptive()),
 
               // Top Bar
+              /*
               Positioned(
                 top: 50,
                 left: 0,
@@ -73,6 +74,7 @@ class KycStep5bAnd6bSelfieCameraScreen extends StatelessWidget {
                   ],
                 ),
               ),
+							*/
 
               // Bottom Controls
               if (controller.selfieImage == null)
@@ -107,13 +109,15 @@ class KycStep5bAnd6bSelfieCameraScreen extends StatelessWidget {
             ),
             child: Center(
               child: Builder(
-                builder: (context) => Container(
+                builder: (context) => SizedBox(
                   height: 60,
                   width: 60,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: Colors.grey.shade900),
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).colorScheme.primary,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: Colors.grey.shade900),
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                 ),
               ),
