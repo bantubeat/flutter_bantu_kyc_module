@@ -76,7 +76,7 @@ class KycModule extends Module {
 
   @override
   void binds(i) {
-    const withCacheKey = 'KycModule@with_cache_key';
+    const withCacheKey = 'KycModule.with_cache_key';
     i.add<bool>(() => isProduction, key: _isProductionKey);
     // Core
     i.addSingleton<KycHttpClient>(_initKycHttpClient(withCache: false));
