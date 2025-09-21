@@ -4,14 +4,14 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:http_cache_hive_store/http_cache_hive_store.dart';
 import 'package:flutter/foundation.dart';
 
-import '../my_http_client.dart';
-import '../my_http_exceptions.dart';
-import '../my_http_response.dart';
+import '../kyc_http_client.dart';
+import '../kyc_http_exceptions.dart';
+import '../kyc_http_response.dart';
 
-class MyHttpClientDioImplemenation extends MyHttpClient {
+class KycHttpClientDioImplemenation extends KycHttpClient {
   final Dio _dio;
 
-  MyHttpClientDioImplemenation({
+  KycHttpClientDioImplemenation({
     required super.baseUrl,
     super.cacheEnabled = false,
     super.getAccessToken,

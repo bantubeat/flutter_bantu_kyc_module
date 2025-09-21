@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart' show protected;
 
-import 'my_http_response.dart';
+import 'kyc_http_response.dart';
 
-abstract class MyHttpClient {
+abstract class KycHttpClient {
   final bool cacheEnabled;
   final String baseUrl;
   final Future<String?> Function()? getAccessToken;
   final Future<String?> Function()? refreshAccessToken;
 
-  const MyHttpClient({
+  const KycHttpClient({
     required this.baseUrl,
     this.cacheEnabled = false,
     this.getAccessToken,

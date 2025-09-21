@@ -4,10 +4,10 @@ import 'package:flutter_bantu_kyc_module/src/layers/domain/entities/kyc_entity.d
 import '../../domain/entities/kyc_submission_entity.dart';
 import '../../domain/repositories/kyc_repository.dart';
 import '../../domain/value_objects/failure.dart';
-import '../data_sources/bantubeat_api_data_source.dart';
+import '../data_sources/kyc_bantubeat_api_data_source.dart';
 
 class KycRepositoryImpl implements KycRepository {
-  final BantubeatApiDataSource _bantubeatApiDataSource;
+  final KycBantubeatApiDataSource _bantubeatApiDataSource;
 
   const KycRepositoryImpl(this._bantubeatApiDataSource);
 

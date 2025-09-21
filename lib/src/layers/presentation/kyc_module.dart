@@ -3,9 +3,9 @@ import 'package:flutter/material.dart' show Widget;
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../core/network/api_constants.dart';
-import '../../core/network/my_http/my_http.dart';
+import '../../core/network/my_http/kyc_http.dart';
 
-import '../data/data_sources/bantubeat_api_data_source.dart';
+import '../data/data_sources/kyc_bantubeat_api_data_source.dart';
 import '../data/repositories/user_repository_impl.dart';
 import '../data/repositories/balance_repository_impl.dart';
 import '../data/repositories/kyc_repository_impl.dart';
@@ -52,9 +52,9 @@ class KycModule extends Module {
     this.isProduction = kReleaseMode,
   }) : _routes = routes;
 
-  MyHttpClient Function() _initMyHttpClient({required bool withCache}) {
+  KycHttpClient Function() _initKycHttpClient({required bool withCache}) {
     return () {
-      return MyHttpClientDioImplemenation(
+      return KycHttpClientDioImplemenation(
         baseUrl: ApiConstants.baseUrl,
         cacheEnabled: withCache,
         getAccessToken: getAccessToken,
@@ -79,21 +79,17 @@ class KycModule extends Module {
     const withCacheKey = 'with_cache_key';
     i.add<bool>(() => isProduction, key: _isProductionKey);
     // Core
-    i.addSingleton<MyHttpClient>(
-      _initMyHttpClient(withCache: false),
-      config: BindConfig(onDispose: (client) => client.close()),
-    );
-    i.addSingleton<MyHttpClient>(
-      _initMyHttpClient(withCache: true),
-      config: BindConfig(onDispose: (client) => client.close()),
+    i.addSingleton<KycHttpClient>(_initKycHttpClient(withCache: false));
+    i.addSingleton<KycHttpClient>(
+      _initKycHttpClient(withCache: true),
       key: withCacheKey,
     );
 
     // Data layer dependencies
     i.addSingleton(
-      () => BantubeatApiDataSource(
-        client: Modular.get<MyHttpClient>(),
-        cachedClient: Modular.get<MyHttpClient>(key: withCacheKey),
+      () => KycBantubeatApiDataSource(
+        client: Modular.get<KycHttpClient>(),
+        cachedClient: Modular.get<KycHttpClient>(key: withCacheKey),
       ),
     );
 

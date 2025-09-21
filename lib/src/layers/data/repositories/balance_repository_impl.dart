@@ -1,9 +1,9 @@
 import '../../domain/entities/payment_preference_entity.dart';
 import '../../domain/repositories/balance_repository.dart';
-import '../data_sources/bantubeat_api_data_source.dart';
+import '../data_sources/kyc_bantubeat_api_data_source.dart';
 
 class BalanceRepositoryImpl implements BalanceRepository {
-  final BantubeatApiDataSource _apiDataSource;
+  final KycBantubeatApiDataSource _apiDataSource;
 
   BalanceRepositoryImpl(this._apiDataSource);
 

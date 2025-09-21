@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart' show FormData, MultipartFile;
 
-import '../../../core/network/my_http/my_http.dart';
+import '../../../core/network/my_http/kyc_http.dart';
 import '../models/payment_preference_model.dart';
 import '../models/kyc_model.dart';
 import '../models/user_model.dart';
@@ -10,13 +10,13 @@ import '../models/user_model.dart';
 /// api path to call, first is the HTTP METHOD to use GET, POST, etc
 /// then the second is the uri in cameCase, so GET /public/all-currencies will
 /// be  get$publicAllCurrencies.
-final class BantubeatApiDataSource {
-  final MyHttpClient _client;
-  // final MyHttpClient _cachedClient;
+final class KycBantubeatApiDataSource {
+  final KycHttpClient _client;
+  // final KycHttpClient _cachedClient;
 
-  const BantubeatApiDataSource({
-    required MyHttpClient client,
-    required MyHttpClient cachedClient,
+  const KycBantubeatApiDataSource({
+    required KycHttpClient client,
+    required KycHttpClient cachedClient,
   }) : _client = client;
   // _cachedClient = cachedClient;
 
