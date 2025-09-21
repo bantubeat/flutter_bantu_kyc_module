@@ -1,6 +1,6 @@
 name: flutter_bantu_kyc_module
 description: "A KYC module for bantubeat eco system apps."
-version: 0.2.2
+version: 0.2.3
 # publish_to: 'none'
 
 environment:
