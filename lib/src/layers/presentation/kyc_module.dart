@@ -77,20 +77,20 @@ class KycModule extends Module {
   @override
   void binds(i) {
     const withCacheKey = 'with_cache_key';
-    i.addLazySingleton<bool>(() => isProduction, key: _isProductionKey);
+    i.add<bool>(() => isProduction, key: _isProductionKey);
     // Core
-    i.addLazySingleton<MyHttpClient>(
+    i.addSingleton<MyHttpClient>(
       _initMyHttpClient(withCache: false),
       config: BindConfig(onDispose: (client) => client.close()),
     );
-    i.addLazySingleton<MyHttpClient>(
+    i.addSingleton<MyHttpClient>(
       _initMyHttpClient(withCache: true),
       config: BindConfig(onDispose: (client) => client.close()),
       key: withCacheKey,
     );
 
     // Data layer dependencies
-    i.addLazySingleton(
+    i.addSingleton(
       () => BantubeatApiDataSource(
         client: Modular.get<MyHttpClient>(),
         cachedClient: Modular.get<MyHttpClient>(key: withCacheKey),
@@ -99,16 +99,16 @@ class KycModule extends Module {
 
     // Domain layer dependencies
     // -- Domain Reposities
-    i.addLazySingleton<BalanceRepository>(BalanceRepositoryImpl.new);
-    i.addLazySingleton<KycRepository>(KycRepositoryImpl.new);
-    i.addLazySingleton<UserRepository>(UserRepositoryImpl.new);
+    i.addSingleton<BalanceRepository>(BalanceRepositoryImpl.new);
+    i.addSingleton<KycRepository>(KycRepositoryImpl.new);
+    i.addSingleton<UserRepository>(UserRepositoryImpl.new);
 
     // -- Domain Use Cases
-    i.addLazySingleton(GetCurrentUserUseCase.new);
-    i.addLazySingleton(GetPaymentPreferencesUseCase.new);
-    i.addLazySingleton(GetKycStatusUseCase.new);
-    i.addLazySingleton(SubmitKycUseCase.new);
-    i.addLazySingleton(CancelKycUseCase.new);
+    i.add(GetCurrentUserUseCase.new);
+    i.add(GetPaymentPreferencesUseCase.new);
+    i.add(GetKycStatusUseCase.new);
+    i.add(SubmitKycUseCase.new);
+    i.add(CancelKycUseCase.new);
 
     // Presentation layer dependencies
     i.addSingleton<CurrentUserCubit>(
