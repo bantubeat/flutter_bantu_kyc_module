@@ -77,7 +77,6 @@ class _Step extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final isActive = step <= currentStep;
     return Flexible(
       child: Column(
@@ -86,7 +85,7 @@ class _Step extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: isActive ? colorScheme.primary : Colors.grey[300],
+              color: isActive ? Colors.black : Colors.grey[300],
               shape: BoxShape.circle,
             ),
             child: Center(

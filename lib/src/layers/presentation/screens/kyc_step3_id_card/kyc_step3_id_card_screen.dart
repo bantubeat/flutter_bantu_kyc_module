@@ -75,6 +75,7 @@ class KycStep3IdCardScreen extends StatelessWidget {
                               controller.pickIdImage(isRecto: true),
                           pickedImage: controller.rectoIdImage,
                           onNext: controller.onNext,
+                          nextLabel: LocaleKeys.kyc_module_common_next.tr(),
                         ),
                         _KycIdUploadPage(
                           title: LocaleKeys

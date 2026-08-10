@@ -2,9 +2,13 @@ part of 'kyc_step1_personal_infos_screen.dart';
 
 class Step1Controller extends ScreenController {
   final UserEntity? _currentUser;
+  final AccountType _accountType;
 
-  Step1Controller(super.state, UserEntity? currentUser)
-    : _currentUser = currentUser ?? Modular.get<CurrentUserCubit>().state.data;
+  Step1Controller(super.state, KycStartContext? startContext)
+    : _currentUser =
+          startContext?.currentUser ??
+          Modular.get<CurrentUserCubit>().state.data,
+      _accountType = startContext?.accountType ?? AccountType.particulier;
 
   final surnameCtrl = TextEditingController();
   final nameCtrl = TextEditingController();
@@ -36,6 +40,20 @@ class Step1Controller extends ScreenController {
       initialDate: DateTime.now().subtract(const Duration(days: 365 * 30)),
       firstDate: DateTime.now().subtract(const Duration(days: 365 * 100)),
       lastDate: DateTime.now().subtract(const Duration(days: 365 * 18)),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Colors.black,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black,
+            ),
+            dialogTheme: const DialogThemeData(backgroundColor: Colors.white),
+          ),
+          child: child!,
+        );
+      },
     );
     refreshUI();
   }
@@ -53,6 +71,7 @@ class Step1Controller extends ScreenController {
         lastName.isNotEmpty) {
       final kycFormData = KycFormDataStep1(
         currentUser: currentUser,
+        accountType: _accountType,
         firstName: firstName,
         lastName: lastName,
         birthdate: birthdate,
