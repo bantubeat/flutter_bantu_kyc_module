@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bantu_kyc_module/src/core/generated/locale_keys.g.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/string_translate_extension.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/screens/kyc_step4_payment_account/kyc_step4_payment_account_controller.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_app_bar.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_card.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_country_select_field.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_header.dart';
-import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_label.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_primary_button.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_text_field.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_upload_box.dart';
@@ -21,6 +22,7 @@ class KycStep4PaymentAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const KycFormAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -43,46 +45,52 @@ class KycStep4PaymentAccountScreen extends StatelessWidget {
                           subtitle: LocaleKeys.kyc_module_step4_description
                               .tr(),
                         ),
-                        const SizedBox(height: 24),
-                        KycFormLabel(
-                          LocaleKeys.kyc_module_step4_account_type.tr(),
+
+                        KycFormCountrySelectField(
+                          label: LocaleKeys.kyc_module_step3_nationality.tr(),
+                          initialSelection: ctrl.selectedCountry?.code,
+                          onChanged: ctrl.selectCountry,
                         ),
 
-                        ...[false, true]
-                            .map(
-                              (isCompanyVal) => [
-                                GestureDetector(
-                                  onTap: () =>
-                                      ctrl.setAccountType(isCompanyVal),
-                                  child: Row(
-                                    children: [
-                                      Radio<bool>.adaptive(
-                                        value: isCompanyVal,
-                                        activeColor: Theme.of(
-                                          context,
-                                        ).colorScheme.primary,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        isCompanyVal
-                                            ? LocaleKeys
-                                                  .kyc_module_step4_account_type_company
-                                                  .tr()
-                                            : LocaleKeys
-                                                  .kyc_module_step4_account_type_particular
-                                                  .tr(),
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                        // const SizedBox(height: 24),
+                        // KycFormLabel(
+                        //   LocaleKeys.kyc_module_step4_account_type.tr(),
+                        // ),
 
-                                const SizedBox(height: 8),
-                              ],
-                            )
-                            .reduce((l1, l2) => [...l1, ...l2]),
+                        // ...[false, true]
+                        //     .map(
+                        //       (isCompanyVal) => [
+                        //         GestureDetector(
+                        //           onTap: () =>
+                        //               ctrl.setAccountType(isCompanyVal),
+                        //           child: Row(
+                        //             children: [
+                        //               Radio<bool>.adaptive(
+                        //                 value: isCompanyVal,
+                        //                 activeColor: Theme.of(
+                        //                   context,
+                        //                 ).colorScheme.primary,
+                        //               ),
+                        //               const SizedBox(width: 8),
+                        //               Text(
+                        //                 isCompanyVal
+                        //                     ? LocaleKeys
+                        //                           .kyc_module_step4_account_type_company
+                        //                           .tr()
+                        //                     : LocaleKeys
+                        //                           .kyc_module_step4_account_type_particular
+                        //                           .tr(),
+                        //                 style: const TextStyle(fontSize: 16),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
 
-                        const SizedBox(height: 16),
+                        //         const SizedBox(height: 8),
+                        //       ],
+                        //     )
+                        //     .reduce((l1, l2) => [...l1, ...l2]),
+                        const SizedBox(height: 10),
 
                         if (isCompany) ...[
                           KycFormTextField(

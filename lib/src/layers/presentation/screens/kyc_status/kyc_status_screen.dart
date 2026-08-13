@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemChrome, SystemUiOverlayStyle;
 import 'package:flutter_bantu_kyc_module/src/core/generated/locale_keys.g.dart';
@@ -9,6 +11,8 @@ import 'package:flutter_bantu_kyc_module/src/layers/presentation/cubits/kyc/kyc_
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/kyc_module.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/localization/string_translate_extension.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/navigation/kyc_routes.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/presentation/ui_models/kyc_form_data.dart';
+import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/account_type_modal.dart';
 import 'package:flutter_bantu_kyc_module/src/layers/presentation/widgets/kyc_form_primary_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -32,18 +36,20 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
 
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor:
-            Colors.transparent, // Or any light color for the background
-        statusBarIconBrightness: Brightness.dark, // Makes icons and text dark
-        statusBarBrightness: Brightness
-            .light, // For iOS, sets the status bar content to light (dark icons)
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
       ),
     );
   }
 
   // Navigate to the start of the KYC flow
-  void _navigateToKycStep1(UserEntity currentUser) {
-    Modular.get<KycRoutes>().step1.navigate(currentUser);
+  Future<void> _navigateToKycStep1(UserEntity currentUser) async {
+    final accountType = await AccountTypeModal.show(context);
+    if (accountType == null || !mounted) return;
+    Modular.get<KycRoutes>().step1.push(
+      KycStartContext(currentUser: currentUser, accountType: accountType),
+    );
   }
 
   void _goBack([bool? result]) {
@@ -75,8 +81,8 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                   switch (state.kyc.status) {
                     case EKycStatus.success:
                       return _KycStatusView(
-                        icon: Icons.check_circle,
-                        iconColor: Colors.green,
+                        icon: Icons.check,
+                        iconColor: Colors.black,
                         title: LocaleKeys.kyc_module_status_screen_success_title
                             .tr(),
                         message: LocaleKeys
@@ -90,8 +96,8 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                       );
                     case EKycStatus.failed:
                       return _KycStatusView(
-                        icon: Icons.cancel,
-                        iconColor: Colors.red,
+                        icon: Icons.close,
+                        iconColor: Colors.red.shade700,
                         title: LocaleKeys.kyc_module_status_screen_failed_title
                             .tr(),
                         message: LocaleKeys
@@ -105,14 +111,14 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                             .kyc_module_status_screen_failed_button_text
                             .tr(),
                         onButtonPressed: () => _navigateToKycStep1(currentUser),
-                        isFailed: true,
+                        isFailed: false,
                         showCancelButton: true,
                         onCancelPressed: _goBack,
                       );
                     case EKycStatus.pending:
                       return _KycStatusView(
-                        icon: Icons.hourglass_empty,
-                        iconColor: Colors.orange,
+                        icon: Icons.hourglass_top,
+                        iconColor: Colors.orange.shade700,
                         title: LocaleKeys.kyc_module_status_screen_pending_title
                             .tr(),
                         message: LocaleKeys
@@ -123,15 +129,14 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                             .tr(),
                         showCancelButton: true,
                         onButtonPressed: () {
-                          // Implement cancellation logic
-                          BlocProvider.of<KycCubit>(context).cancelKyc();
+                          Modular.get<KycCubit>().cancelKyc();
                         },
                         onCancelPressed: _goBack,
                       );
                     default:
                       return _KycStatusView(
-                        icon: Icons.help_outline,
-                        iconColor: Colors.grey,
+                        icon: Icons.question_mark,
+                        iconColor: Colors.grey.shade700,
                         title: LocaleKeys.kyc_module_status_screen_unknown_title
                             .tr(),
                         message: LocaleKeys
@@ -180,6 +185,10 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
                           const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () => KycModule.getOnKycFinishFn()(null),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey.shade200,
+                              foregroundColor: Colors.black87,
+                            ),
                             child: Text(
                               LocaleKeys
                                   .kyc_module_status_screen_success_button_text
@@ -203,8 +212,8 @@ class _KycStatusScreenState extends State<KycStatusScreen> {
           ),
         ),
       ),
-      floatingActionButton: KycModule.getFloatingMenuWidget(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: KycModule.getFloatingMenuWidget(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

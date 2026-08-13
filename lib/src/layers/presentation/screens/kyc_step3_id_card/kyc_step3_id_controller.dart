@@ -87,17 +87,27 @@ class _KycStep3IdController extends ScreenController {
     final currentPage = pageCtrl.page;
     if (currentPage == null) return;
     if (currentPage == 1 && !rectoConsentChecked) {
-      UiAlertHelpers.showErrorSnackBar(
-        context,
+      UiAlertHelpers.showErrorToast(
         LocaleKeys.kyc_module_step3_consent_not_checked.tr(),
+      );
+      return;
+    }
+    if (currentPage == 1 && _rectoIdImageXFile == null) {
+      UiAlertHelpers.showErrorToast(
+        "Veuillez sélectionner une image pour le recto de votre pièce d'identité.",
       );
       return;
     }
 
     if (currentPage == 2 && !versoConsentChecked) {
-      UiAlertHelpers.showErrorSnackBar(
-        context,
+      UiAlertHelpers.showErrorToast(
         LocaleKeys.kyc_module_step3_consent_not_checked.tr(),
+      );
+      return;
+    }
+    if (currentPage == 2 && _versoIdImageXFile == null) {
+      UiAlertHelpers.showErrorToast(
+        "Veuillez sélectionner une image pour le verso de votre pièce d'identité.",
       );
       return;
     }

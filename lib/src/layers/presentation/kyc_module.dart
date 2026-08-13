@@ -130,7 +130,7 @@ class KycModule extends Module {
     r.child(_routes.home.wp, child: (_) => const KycStatusScreen());
     r.child(
       _routes.step1.wp,
-      child: (_) => KycStep1PersonalInfosScreen(currentUser: r.args.data),
+      child: (_) => KycStep1PersonalInfosScreen(startContext: r.args.data),
     );
     r.child(
       _routes.step2.wp,

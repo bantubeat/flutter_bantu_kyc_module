@@ -3,20 +3,32 @@ import 'package:flutter_bantu_kyc_module/src/layers/domain/entities/kyc_submissi
 import 'package:flutter_bantu_kyc_module/src/layers/domain/entities/user_entity.dart';
 import 'package:image_picker/image_picker.dart' show XFile;
 
+import '../widgets/account_type_modal.dart';
+
+/// Données passées au démarrage du KYC (utilisateur + type de compte choisi).
+class KycStartContext {
+  final UserEntity currentUser;
+  final AccountType accountType;
+
+  const KycStartContext({required this.currentUser, required this.accountType});
+}
+
 // MARK: Personal Info (from a first screen)
 enum EGender { M, F, O }
 
 class KycFormDataStep1 {
   final UserEntity currentUser;
+  final AccountType accountType;
   final String firstName;
   final String? lastName;
   final DateTime birthdate;
   final EGender gender;
 
   const KycFormDataStep1({
+    required this.currentUser,
+    required this.accountType,
     required this.firstName,
     required this.lastName,
-    required this.currentUser,
     required this.birthdate,
     required this.gender,
   });
@@ -110,14 +122,14 @@ class KycFormDataStep6 {
       selfieWithIdCardImagePath: selfieWithIdImage.path,
       email: step1Data.currentUser.email,
       linkRs: null, // Assuming linkRs is not used in this context
-      company: step4Data.isCompany
+      company: step1Data.accountType.isCompany
           ? (
               name: step4Data.companyName,
               registrationNumber: step4Data.companyRegistrationNumber,
               tva: step4Data.companyTva,
             )
           : null,
-      particular: !step4Data.isCompany
+      particular: !step1Data.accountType.isCompany
           ? (registrationNumber: step4Data.companyRegistrationNumber)
           : null,
     );

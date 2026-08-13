@@ -4,6 +4,7 @@ part of '../../kyc_step3_id_card_screen.dart';
 class _KycIdUploadPage extends StatelessWidget {
   final String title;
   final String subtitle;
+  final String? nextLabel;
   final bool isConsentChecked;
   final VoidCallback onPickIdImage;
   final ImageProvider<Object>? pickedImage;
@@ -12,6 +13,7 @@ class _KycIdUploadPage extends StatelessWidget {
 
   const _KycIdUploadPage({
     required this.title,
+    this.nextLabel,
     required this.subtitle,
     required this.isConsentChecked,
     required this.pickedImage,
@@ -22,27 +24,32 @@ class _KycIdUploadPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height - 200,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            KycFormHeader(title: title, subtitle: subtitle),
-            const SizedBox(height: 24),
-            KycFormUploadBox(
-              label: LocaleKeys.kyc_module_step3_load_image.tr(),
-              image: pickedImage,
-              onTap: onPickIdImage,
+    return LayoutBuilder(
+      builder: (context, constraints) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: constraints.maxHeight),
+          child: IntrinsicHeight(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                KycFormHeader(title: title, subtitle: subtitle),
+                const SizedBox(height: 24),
+                KycFormUploadBox(
+                  label: LocaleKeys.kyc_module_step3_load_image.tr(),
+                  image: pickedImage,
+                  onTap: onPickIdImage,
+                ),
+                const Spacer(),
+
+                _KycIdConsentCheckbox(
+                  isChecked: isConsentChecked,
+                  onChanged: onToggleConsent,
+                ),
+                const SizedBox(height: 24),
+                KycFormPrimaryButton(onPressed: onNext, label: nextLabel),
+              ],
             ),
-            const SizedBox(height: 24),
-            _KycIdConsentCheckbox(
-              isChecked: isConsentChecked,
-              onChanged: onToggleConsent,
-            ),
-            const Spacer(),
-            KycFormPrimaryButton(onPressed: onNext),
-          ],
+          ),
         ),
       ),
     );

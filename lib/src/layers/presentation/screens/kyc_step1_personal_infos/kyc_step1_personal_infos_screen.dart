@@ -15,12 +15,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screen_controller/flutter_screen_controller.dart';
 
 import '../../ui_models/kyc_form_data.dart';
+import '../../widgets/account_type_modal.dart';
 part 'step1_controller.dart';
 
 class KycStep1PersonalInfosScreen extends StatelessWidget {
-  final UserEntity? currentUser;
+  final KycStartContext? startContext;
 
-  const KycStep1PersonalInfosScreen({this.currentUser});
+  const KycStep1PersonalInfosScreen({this.startContext});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class KycStep1PersonalInfosScreen extends StatelessWidget {
             const SizedBox(height: 32),
             // --- Main Content Card ---
             ScreenControllerBuilder(
-              create: (s) => Step1Controller(s, currentUser),
+              create: (s) => Step1Controller(s, startContext),
               builder: (context, ctrl) => KycFormCard(
                 child: RadioGroup<EGender>(
                   groupValue: ctrl.selectedGender,
@@ -83,33 +84,51 @@ class KycStep1PersonalInfosScreen extends StatelessWidget {
                           color: Colors.black54,
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      ...genderTitles.keys
-                          .map(
-                            (value) => [
-                              GestureDetector(
-                                onTap: () => ctrl.selectGender(value),
-                                child: Row(
-                                  children: [
-                                    Radio<EGender>.adaptive(
-                                      value: value,
-                                      activeColor: Theme.of(
-                                        context,
-                                      ).colorScheme.primary,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      genderTitles[value] ?? '',
-                                      style: const TextStyle(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: genderTitles.keys
+                            .map(
+                              (value) => [
+                                GestureDetector(
+                                  onTap: () => ctrl.selectGender(value),
+                                  child: Row(
+                                    children: [
+                                      Theme(
+                                        data: Theme.of(context).copyWith(
+                                          radioTheme: const RadioThemeData(
+                                            materialTapTargetSize:
+                                                MaterialTapTargetSize.padded,
+                                          ),
+                                        ),
+                                        child: Transform.scale(
+                                          scale: 1,
+                                          child: Radio<EGender>.adaptive(
+                                            value: value,
+                                            activeColor: Colors.black,
 
-                              const SizedBox(height: 8),
-                            ],
-                          )
-                          .reduce((l1, l2) => [...l1, ...l2]),
+                                            // splashRadius: 40,
+                                            visualDensity: const VisualDensity(
+                                              horizontal: 0,
+                                              vertical: 4,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      // const SizedBox(width: 1),
+                                      Text(
+                                        genderTitles[value] ?? '',
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                const SizedBox(height: 8),
+                              ],
+                            )
+                            .reduce((l1, l2) => [...l1, ...l2]),
+                      ),
 
                       const SizedBox(height: 32),
                       // --- Validation Button ---
