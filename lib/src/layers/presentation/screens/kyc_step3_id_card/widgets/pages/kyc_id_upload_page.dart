@@ -36,7 +36,7 @@ class _KycIdUploadPage extends StatelessWidget {
               onTap: onPickIdImage,
             ),
             const SizedBox(height: 24),
-            _KycIdConsentCheckbox(
+            KycIdConsentCheckbox(
               isChecked: isConsentChecked,
               onChanged: onToggleConsent,
             ),

@@ -17,6 +17,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screen_controller/flutter_screen_controller.dart';
 import 'package:image_picker/image_picker.dart' show XFile;
 
+import '../../helpers/legal_links.dart';
 import '../../helpers/ui_alert_helpers.dart';
 
 part 'kyc_step3_id_controller.dart';

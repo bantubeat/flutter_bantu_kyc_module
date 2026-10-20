@@ -1,10 +1,10 @@
 part of '../kyc_step3_id_card_screen.dart';
 
-class _KycIdConsentCheckbox extends StatelessWidget {
+class KycIdConsentCheckbox extends StatelessWidget {
   final bool isChecked;
   final ValueChanged<bool?> onChanged;
 
-  const _KycIdConsentCheckbox({
+  const KycIdConsentCheckbox({
     required this.isChecked,
     required this.onChanged,
   });
@@ -22,8 +22,34 @@ class _KycIdConsentCheckbox extends StatelessWidget {
         Expanded(
           child: GestureDetector(
             onTap: () => onChanged(!isChecked),
-            child: Text(
-              LocaleKeys.kyc_module_step3_warning.tr(),
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: LocaleKeys.kyc_module_step3_warning.tr()),
+                  // The whole sentence holding the link is hidden when the
+                  // host app does not provide the legal URLs.
+                  if (LegalLinks.isAvailable) ...[
+                    const TextSpan(text: ' '),
+                    TextSpan(
+                      text: LocaleKeys.kyc_module_step3_warning_privacy_intro
+                          .tr(),
+                    ),
+                    LegalLinks.span(
+                      context,
+                      KycLegalDoc.privacy,
+                      text: LocaleKeys.kyc_module_step3_warning_privacy_link
+                          .tr(),
+                      style: const TextStyle(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    TextSpan(
+                      text: LocaleKeys.kyc_module_step3_warning_privacy_end
+                          .tr(),
+                    ),
+                  ],
+                ],
+              ),
               style: const TextStyle(fontSize: 12),
             ),
           ),

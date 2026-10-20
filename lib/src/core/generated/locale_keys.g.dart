@@ -69,6 +69,9 @@ abstract class  LocaleKeys {
   static const kyc_module_step3_load_image = 'kyc_module.step3.load_image';
   static const kyc_module_step3_consent_not_checked = 'kyc_module.step3.consent_not_checked';
   static const kyc_module_step3_warning = 'kyc_module.step3.warning';
+  static const kyc_module_step3_warning_privacy_intro = 'kyc_module.step3.warning_privacy_intro';
+  static const kyc_module_step3_warning_privacy_link = 'kyc_module.step3.warning_privacy_link';
+  static const kyc_module_step3_warning_privacy_end = 'kyc_module.step3.warning_privacy_end';
   static const kyc_module_step3_pick_recto_page_title = 'kyc_module.step3.pick_recto_page_title';
   static const kyc_module_step3_pick_verso_page_description = 'kyc_module.step3.pick_verso_page_description';
   static const kyc_module_step3_pick_verso_page_title = 'kyc_module.step3.pick_verso_page_title';
