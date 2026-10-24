@@ -9,7 +9,7 @@ class _KycStatusView extends StatelessWidget {
   final VoidCallback onButtonPressed;
   final bool isFailed;
   final bool showCancelButton;
-  final VoidCallback onCancelPressed;
+  final VoidCallback? onCancelPressed;
 
   const _KycStatusView({
     required this.icon,
@@ -18,80 +18,153 @@ class _KycStatusView extends StatelessWidget {
     required this.message,
     required this.buttonText,
     required this.onButtonPressed,
-    required this.onCancelPressed,
     this.isFailed = false,
     this.showCancelButton = false,
+    this.onCancelPressed,
   });
 
-  static _KycStatusView loading() {
+  /// Squelette affiché pendant le chargement (utilisé avec [Skeletonizer]).
+  factory _KycStatusView.loading() {
     return _KycStatusView(
-      icon: Icons.hourglass_empty,
-      iconColor: Colors.grey,
-      title: LocaleKeys.kyc_module_status_screen_pending_title.tr(),
-      message: LocaleKeys.kyc_module_status_screen_pending_message.tr(),
-      buttonText: LocaleKeys.kyc_module_status_screen_pending_button_text.tr(),
-      onCancelPressed: () => {},
+      icon: Icons.check,
+      iconColor: Colors.black,
+      title: 'Chargement du statut',
+      message:
+          'Merci de patienter pendant que nous récupérons les informations '
+          'de votre dossier KYC.',
+      buttonText: 'Continuer',
       onButtonPressed: () {},
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(icon, color: iconColor, size: 120),
-            const SizedBox(height: 32),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Column(
+      children: [
+        Expanded(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 160,
+                    height: 160,
+                    child: CustomPaint(
+                      painter: _ScallopPainter(color: iconColor),
+                      child: Center(
+                        child: Icon(icon, color: Colors.white, size: 160 * 0.4),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 28),
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  Text(
+                    message,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      height: 1.4,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 24),
-            if (isFailed)
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  message,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[700],
-                    height: 1.5,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: onButtonPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: const StadiumBorder(),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.chevron_left, size: 22),
+                      const SizedBox(width: 4),
+                      Text(
+                        buttonText,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              )
-            else
-              Text(
-                message,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[700],
-                  height: 1.5,
-                ),
               ),
-            const Spacer(),
-            KycFormPrimaryButton(label: buttonText, onPressed: onButtonPressed),
-
-            if (showCancelButton) const SizedBox(height: 20),
-            if (showCancelButton)
-              ElevatedButton(
-                onPressed: onCancelPressed,
-                child: Text(
-                  LocaleKeys.kyc_module_status_screen_success_button_text.tr(),
+              if (showCancelButton && onCancelPressed != null) ...[
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: onCancelPressed,
+                  child: Text(
+                    'Annuler',
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
-              ),
-          ],
+              ],
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
+}
+
+class _ScallopPainter extends CustomPainter {
+  final Color color;
+
+  _ScallopPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final outerRadius = size.width / 2;
+    final bumpCenterRadius = outerRadius * 0.82;
+    final bumpRadius = outerRadius * 0.24;
+    final coreRadius = outerRadius * 0.78;
+
+    final path = Path()
+      ..addOval(Rect.fromCircle(center: center, radius: coreRadius));
+
+    for (int i = 0; i < 14; i++) {
+      final angle = (2 * math.pi / 14) * i;
+      final bumpCenter = Offset(
+        center.dx + bumpCenterRadius * math.cos(angle),
+        center.dy + bumpCenterRadius * math.sin(angle),
+      );
+      path.addOval(Rect.fromCircle(center: bumpCenter, radius: bumpRadius));
+    }
+
+    canvas.drawPath(path, Paint()..color = color);
+  }
+
+  @override
+  bool shouldRepaint(covariant _ScallopPainter oldDelegate) =>
+      oldDelegate.color != color || 14 != 14;
 }

@@ -17,7 +17,7 @@ class KycIdConsentCheckbox extends StatelessWidget {
         Checkbox(
           value: isChecked,
           onChanged: onChanged,
-          activeColor: Theme.of(context).colorScheme.primary,
+          activeColor: Colors.black,
         ),
         Expanded(
           child: GestureDetector(

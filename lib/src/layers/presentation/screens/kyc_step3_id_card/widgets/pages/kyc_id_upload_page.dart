@@ -4,6 +4,7 @@ part of '../../kyc_step3_id_card_screen.dart';
 class _KycIdUploadPage extends StatelessWidget {
   final String title;
   final String subtitle;
+  final String? nextLabel;
   final bool isConsentChecked;
   final VoidCallback onPickIdImage;
   final ImageProvider<Object>? pickedImage;
@@ -12,6 +13,7 @@ class _KycIdUploadPage extends StatelessWidget {
 
   const _KycIdUploadPage({
     required this.title,
+    this.nextLabel,
     required this.subtitle,
     required this.isConsentChecked,
     required this.pickedImage,
@@ -40,9 +42,7 @@ class _KycIdUploadPage extends StatelessWidget {
               isChecked: isConsentChecked,
               onChanged: onToggleConsent,
             ),
-            const Spacer(),
-            KycFormPrimaryButton(onPressed: onNext),
-          ],
+          ),
         ),
       ),
     );

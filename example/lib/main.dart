@@ -3,14 +3,16 @@ import 'package:flutter/foundation.dart' show kIsWeb, kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bantu_kyc_module/flutter_bantu_kyc_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'widgets/my_bottom_navigation_bar.dart';
 
 // Ben token
+// const _accessToken =
+//     'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmRldi5iYW50dWJlYXQuY29tL2FwaS9hdXRoL3JlZnJlc2giLCJpYXQiOjE3NTQ4OTEyNjgsImV4cCI6MTc1NzMxMDQ2OCwibmJmIjoxNzU0ODkxMjY4LCJqdGkiOiJscHFOVU96Q0RLUE9tanVvIiwic3ViIjoiMGVjZjk1ZjQtMmNlMy00ZGUwLTg4Y2YtMGY4MmU1YTkxMmZkIn0.TG9mfK7mg5fuiWq1BkZ6zh7U-GL-byJPT1HGKYcic4g';
 const _accessToken =
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmRldi5iYW50dWJlYXQuY29tL2FwaS9hdXRoL3JlZnJlc2giLCJpYXQiOjE3NTQ4OTEyNjgsImV4cCI6MTc1NzMxMDQ2OCwibmJmIjoxNzU0ODkxMjY4LCJqdGkiOiJscHFOVU96Q0RLUE9tanVvIiwic3ViIjoiMGVjZjk1ZjQtMmNlMy00ZGUwLTg4Y2YtMGY4MmU1YTkxMmZkIn0.TG9mfK7mg5fuiWq1BkZ6zh7U-GL-byJPT1HGKYcic4g';
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmRldi5iYW50dWJlYXQuY29tL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzg2MDk0NDQyLCJleHAiOjE3ODg1MTM2NDIsIm5iZiI6MTc4NjA5NDQ0MiwianRpIjoidHdVSFB1QWFhTUE4MW83SCIsInN1YiI6IjllM2M2OGUxLTczZDYtNDcyMy04YTAxLWE5YjMxZGQyMjAwOCJ9.fYRSF6QMZby2AOLUNUNbAE8m0sMTlMjpNoaxRQYPnmE';
 
 // Production token
 //const _accessToken =
@@ -35,7 +37,7 @@ void main() async {
         routes: KycRoutes(''.toLowerCase()),
         isProduction: isProduction,
         onFinish: (kycVerified) {
-          Modular.get<KycRoutes>().step1.navigate();
+          Modular.get<KycRoutes>().step1.push();
         },
       ),
       child: const AppWidget(),

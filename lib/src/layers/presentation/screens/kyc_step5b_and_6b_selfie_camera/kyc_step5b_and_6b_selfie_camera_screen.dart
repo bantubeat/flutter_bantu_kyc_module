@@ -30,10 +30,11 @@ class KycStep5bAnd6bSelfieCameraScreen extends StatelessWidget {
           return Stack(
             children: [
               // Camera Preview or Captured Image
-              if (controller.isCameraInitialized)
+              if (controller.isCameraInitialized &&
+                  controller.cameraController != null)
                 Center(
                   child: controller.selfieImage == null
-                      ? CameraPreview(controller.cameraController)
+                      ? CameraPreview(controller.cameraController!)
                       : FutureBuilder(
                           future: controller.selfieImage!.toImageProvider(),
                           builder: (_, snap) => snap.hasData
@@ -41,10 +42,46 @@ class KycStep5bAnd6bSelfieCameraScreen extends StatelessWidget {
                               : const CircularProgressIndicator.adaptive(),
                         ),
                 )
+              else if (controller.errorMessage.isNotEmpty)
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 60,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        controller.errorMessage,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: controller.retryInitialization,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                        ),
+                        child: const Text('Réessayer'),
+                      ),
+                    ],
+                  ),
+                )
               else
-                const Center(child: CircularProgressIndicator.adaptive()),
+                const Center(
+                  child: SizedBox.square(
+                    dimension: 30,
+                    child: CircularProgressIndicator(color: Colors.black),
+                  ),
+                ),
 
-              // Top Bar
+              // Top Bar (commenté comme dans l'original)
               /*
               Positioned(
                 top: 50,
@@ -74,15 +111,26 @@ class KycStep5bAnd6bSelfieCameraScreen extends StatelessWidget {
                   ],
                 ),
               ),
-							*/
+              */
 
               // Bottom Controls
-              if (controller.selfieImage == null)
+              if (controller.selfieImage == null &&
+                  controller.errorMessage.isEmpty)
                 _buildShutterButton(controller.takePicture)
-              else
+              else if (controller.selfieImage != null &&
+                  controller.errorMessage.isEmpty)
                 _buildConfirmationButtons(
                   onRetakePicture: controller.retakePicture,
                   onValidate: controller.onValidate,
+                ),
+
+              // Loading overlay
+              if (controller.isLoading)
+                Container(
+                  color: Colors.black54,
+                  child: const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
                 ),
             ],
           );
@@ -93,7 +141,7 @@ class KycStep5bAnd6bSelfieCameraScreen extends StatelessWidget {
 
   Widget _buildShutterButton(VoidCallback onTakePicture) {
     return Positioned(
-      bottom: 40,
+      bottom: 60,
       left: 0,
       right: 0,
       child: Align(
@@ -116,7 +164,7 @@ class KycStep5bAnd6bSelfieCameraScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(width: 2, color: Colors.grey.shade900),
                       shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -133,7 +181,7 @@ class KycStep5bAnd6bSelfieCameraScreen extends StatelessWidget {
     required VoidCallback onRetakePicture,
   }) {
     return Positioned(
-      bottom: 40,
+      bottom: 60,
       left: 24,
       right: 24,
       child: Row(

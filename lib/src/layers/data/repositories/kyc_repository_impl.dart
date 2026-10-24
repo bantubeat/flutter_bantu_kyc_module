@@ -47,6 +47,8 @@ class KycRepositoryImpl implements KycRepository {
         selfieWithIdCardImagePath: submission.selfieWithIdCardImagePath,
         linkRs: submission.linkRs,
         email: submission.email,
+        particular: submission.particular,
+        company: submission.company,
       );
       return const Right(unit);
     } on ServerException catch (e) {

@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/foundation.dart' show protected;
 import 'package:flutter/material.dart'
     show ImageProvider, TextEditingController;
@@ -11,10 +12,16 @@ import 'package:flutter_screen_controller/flutter_screen_controller.dart';
 import 'package:image_picker/image_picker.dart' show XFile;
 
 import '../../ui_models/kyc_form_data.dart';
+import '../../widgets/account_type_modal.dart';
 
 class KycStep4PaymentAccountController extends ScreenController {
   final KycFormDataStep3 step3Data;
-  bool selectedAccountTypeIsCompany = false;
+  bool selectedAccountTypeIsCompany;
+  CountryCode? selectedCountry;
+  void selectCountry(CountryCode countryCode) {
+    selectedCountry = countryCode;
+    refreshUI();
+  }
 
   final companyRegistrationNumberCtrl = TextEditingController(text: '');
   final companyTvaCtrl = TextEditingController(text: '');
@@ -23,7 +30,11 @@ class KycStep4PaymentAccountController extends ScreenController {
   XFile? _fiscalDocumentXFile;
   ImageProvider? fiscalDocumentt;
 
-  KycStep4PaymentAccountController(super.state, this.step3Data);
+  KycStep4PaymentAccountController(super.state, this.step3Data)
+    : selectedAccountTypeIsCompany =
+          step3Data.step2Data.previousData.accountType.isCompany {
+    selectedCountry = step3Data.idCountry;
+  }
 
   @protected
   @override
@@ -57,6 +68,12 @@ class KycStep4PaymentAccountController extends ScreenController {
       return UiAlertHelpers.showErrorSnackBar(
         context,
         LocaleKeys.kyc_module_common_all_fields_required.tr(),
+      );
+    }
+
+    if (_fiscalDocumentXFile == null) {
+      return UiAlertHelpers.showErrorToast(
+        'Veuillez sélectionner un document fiscal pour votre entreprise.',
       );
     }
 

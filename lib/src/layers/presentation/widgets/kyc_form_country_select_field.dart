@@ -21,7 +21,7 @@ class KycFormCountrySelectField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,10 +29,10 @@ class KycFormCountrySelectField extends StatelessWidget {
           const SizedBox(height: 8.0),
           // We wrap the CountryCodePicker in a Container to apply the custom border and padding.
           Container(
-            // height: 56.0,
+            height: 50.0,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey.shade400, width: 1.0),
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(8.0),
             ),
             child: CountryCodePicker(
               // The initial selection can be set using a country code.
