@@ -82,7 +82,10 @@ const Map<String, dynamic> langMap = {
       "load_image": "Upload your document",
 			"consent_not_checked": "You must accept the consent",
       "warning":
-          "I hereby accept that the above document belongs to me and voluntarily give my consent to Bantubeat to use it as proof of address for KYC for this purpose only",
+          "I hereby accept that the above document belongs to me and voluntarily give my consent to Featlink to use it as proof of address for KYC for this purpose only.",
+      "warning_privacy_intro": "To learn more about how your data is processed, see our ",
+      "warning_privacy_link": "privacy policy",
+      "warning_privacy_end": ".",
 			"pick_recto_page_title": "ID Document (Front)",
       "pick_verso_page_description": "Upload a readable image of the back of your ID document",
 			"pick_verso_page_title": "ID Document (Back)",

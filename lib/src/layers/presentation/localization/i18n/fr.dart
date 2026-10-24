@@ -82,7 +82,10 @@ const Map<String, dynamic> langMap = {
       "load_image": "Charger votre pièce",
 			"consent_not_checked": "Vous devez accepter le consentement",
       "warning":
-          "J'accepte par la présente que le document ci-dessus m'appartient et donne volontairement mon consentement à Bantubeat pour l'utiliser comme preuve d'adresse pour KYC à dessein uniquement",
+          "J'accepte par la présente que le document ci-dessus m'appartient et donne volontairement mon consentement à Featlink pour l'utiliser comme preuve d'adresse pour KYC à dessein uniquement.",
+      "warning_privacy_intro": "Pour en savoir plus sur le traitement de vos données, consultez notre ",
+      "warning_privacy_link": "politique de confidentialité",
+      "warning_privacy_end": ".",
 			"pick_recto_page_title": "Pièce d'identité (Recto)",
       "pick_verso_page_description": "Charger une image lissible du verso de votre carte d’identité",
 			"pick_verso_page_title": "Pièce d'identité (Verso)",

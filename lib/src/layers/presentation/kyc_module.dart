@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Widget;
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../core/config/kyc_legal_doc.dart';
 import '../../core/network/api_constants.dart';
 import '../../core/network/my_http/kyc_http.dart';
 
@@ -37,6 +38,8 @@ class KycModule extends Module {
   static const _floatingMenuBuilderKey = 'KycModule._floatingMenuBuilder';
   static const _onFinishKey = 'KycModule._onFinishKey';
   static const _isProductionKey = 'KycModule._isProduction';
+  @visibleForTesting
+  static const legalUrlBuilderKey = 'KycModule._legalUrlBuilder';
 
   final Widget Function() floatingMenuBuilder;
   final Future<String?> Function() getAccessToken;
@@ -44,12 +47,17 @@ class KycModule extends Module {
   final bool isProduction;
   final OnKycFinishFn onFinish;
 
+  /// Provides the URLs of the legal documents. When null, no legal link is
+  /// displayed by the module.
+  final KycLegalUrlBuilder? legalUrlBuilder;
+
   KycModule({
     required this.floatingMenuBuilder,
     required this.getAccessToken,
     required this.onFinish,
     required KycRoutes routes,
     this.isProduction = kReleaseMode,
+    this.legalUrlBuilder,
   }) : _routes = routes;
 
   KycHttpClient Function() _initKycHttpClient({required bool withCache}) {
@@ -60,6 +68,10 @@ class KycModule extends Module {
         getAccessToken: getAccessToken,
       );
     };
+  }
+
+  static KycLegalUrlBuilder? getLegalUrlBuilder() {
+    return Modular.tryGet<KycLegalUrlBuilder>(key: legalUrlBuilderKey);
   }
 
   static bool getIsProduction() {
@@ -121,6 +133,9 @@ class KycModule extends Module {
     );
     i.addSingleton(floatingMenuBuilder, key: _floatingMenuBuilderKey);
     i.addSingleton<OnKycFinishFn>(() => onFinish, key: _onFinishKey);
+    if (legalUrlBuilder case final builder?) {
+      i.addInstance<KycLegalUrlBuilder>(builder, key: legalUrlBuilderKey);
+    }
     i.addInstance<KycRoutes>(_routes);
   }
 
