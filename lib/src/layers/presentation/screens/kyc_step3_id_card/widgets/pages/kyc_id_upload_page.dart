@@ -42,7 +42,7 @@ class _KycIdUploadPage extends StatelessWidget {
               isChecked: isConsentChecked,
               onChanged: onToggleConsent,
             ),
-          ),
+          ],
         ),
       ),
     );
